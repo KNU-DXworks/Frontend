@@ -1,10 +1,12 @@
+import userIcon from "@/assets/userIcon.svg";
+
 interface InfoCardProps {
-    imgUrl: string;
+    imgUrl?: string;
     label: string;
     desc: string;
 }
 
-export const InfoCard = ({ imgUrl, label, desc }: InfoCardProps) => {
+export const InfoCard = ({ imgUrl = userIcon, label, desc }: InfoCardProps) => {
     return (
         <div className="flex flex-col items-center shadow-md p-2 w-[98px] h-[105px] rounded-xl">
             <img src={imgUrl} className="w-[44px] h-[44px] rounded-full object-contain"></img>
