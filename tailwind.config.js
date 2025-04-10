@@ -63,6 +63,7 @@ export default {
             chat: "#EDEDED",
             white: "#fff",
             black: "#000",
+            yellow: "#FDE500",
         },
     },
     plugins: [require("tailwindcss-animate")],
