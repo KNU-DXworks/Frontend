@@ -66,5 +66,5 @@ export default {
             yellow: "#FDE500",
         },
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar"), require("tailwind-scrollbar-hide")],
 };
