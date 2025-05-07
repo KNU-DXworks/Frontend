@@ -19,8 +19,12 @@ const sizeStyles = {
     s: "w-2/5 h-[40px] text-sm",
 };
 
-export const Button = ({ type = "primary", size = "l", label }: ButtonProps) => {
+export const Button = ({ type = "primary", size = "l", label, onClick }: ButtonProps) => {
     const className = clsx("shadow-md rounded-xl", typeStyles[type], sizeStyles[size]);
 
-    return <button className={className}>{label}</button>;
+    return (
+        <button onClick={onClick} className={className}>
+            {label}
+        </button>
+    );
 };
