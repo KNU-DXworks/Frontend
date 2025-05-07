@@ -5,14 +5,16 @@ interface TextAreaProps {
     placeholder?: string;
     children?: ReactNode;
     className?: string;
+    readOnly?: boolean;
 }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-    ({ type = "primary", placeholder, children, className }, ref) => {
+    ({ type = "primary", placeholder, children, className, readOnly = false }, ref) => {
         return (
             <textarea
                 ref={ref}
                 placeholder={placeholder}
+                readOnly={readOnly}
                 className={clsx(
                     "rounded-xl w-full p-4 outline-none overflow-y-scroll resize-none scrollbar-hide",
                     type === "primary" ? "border border-lightGray h-[120px]" : "border-none h-[70px]",
