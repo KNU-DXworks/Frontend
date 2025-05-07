@@ -4,6 +4,7 @@ interface ButtonProps {
     type?: "primary" | "secondary" | "login";
     size?: "l" | "m" | "s";
     label: string;
+    onClick?: () => void;
 }
 
 const typeStyles = {
