@@ -10,7 +10,7 @@ interface RecommendedUserProps {
 
 export const RecommendedUser = ({ imgUrl = userIcon, name, prev, label }: RecommendedUserProps) => {
     return (
-        <div className="flex items-center gap-4 rounded-xl p-2">
+        <div className="flex items-center gap-4 rounded-xl p-2 cursor-pointer">
             <img src={imgUrl} className="w-[50px] h-[50px] rounded-full object-cover"></img>
             <div className="flex flex-col gap-1">
                 <span className="text-sm">{name}</span>

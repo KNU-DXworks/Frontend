@@ -6,9 +6,9 @@ interface SectionHeaderProps {
 
 export const SectionHeader = ({ label }: SectionHeaderProps) => {
     return (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center w-full justify-between">
             <span className="text-darkGray font-bold">{label}</span>
-            <img src={rightArrow}></img>
+            <img src={rightArrow} className="cursor-pointer"></img>
         </div>
     );
 };

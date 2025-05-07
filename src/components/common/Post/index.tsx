@@ -24,7 +24,7 @@ export const Post = ({ userImgUrl = userIcon, name, time, label, text, postImgUr
                 <div className="flex gap-2">
                     <img src={userImgUrl} className="w-[44px] h-[44px]"></img>
                     {/* 시간과 사용자  */}
-                    <div className="flex flex-col gap-0">
+                    <div className="flex flex-col gap-0 cursor-pointer">
                         {/* 사용자이름과 badge */}
                         <div className="flex items-center gap-3">
                             <span>{name}</span>
