@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
     darkMode: ["class"],
-    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", "./.storybook/**/*.{js,ts,jsx,tsx,mdx}"],
     theme: {
         extend: {
             borderRadius: {
@@ -50,6 +50,17 @@ export default {
                     4: "hsl(var(--chart-4))",
                     5: "hsl(var(--chart-5))",
                 },
+                lightGreen: "#E9FFEF",
+                point: "#05BE71",
+                lightRed: "#FFF4F3",
+                red: "#EA4335",
+                darkGray: "#626262",
+                gray: "#828387",
+                lightGray: "#B7B7B7",
+                chat: "#EDEDED",
+                white: "#fff",
+                black: "#000",
+                yellow: "#FDE500",
             },
         },
         colors: {
