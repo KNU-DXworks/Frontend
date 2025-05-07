@@ -8,11 +8,9 @@ export const Header = () => {
     };
 
     return (
-        <div className="flex border items-center p-4">
-            <button
-                onClick={handleClick}
-                className="bg-[url('/src/assets/leftArrow.svg')] bg-no-repeat bg-center w-[10px] h-[20px]"
-            ></button>
-        </div>
+        <button
+            onClick={handleClick}
+            className="bg-[url('/src/assets/leftArrow.svg')] bg-no-repeat bg-center w-[10px] h-[20px]"
+        ></button>
     );
 };
