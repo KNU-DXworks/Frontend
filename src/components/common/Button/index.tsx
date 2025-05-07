@@ -14,7 +14,7 @@ const typeStyles = {
 };
 
 const sizeStyles = {
-    l: "w-full h-[50px] font-semibold",
+    l: "w-full h-[50px]",
     m: "w-2/3 h-[40px] text-sm",
     s: "w-2/5 h-[40px] text-sm",
 };
