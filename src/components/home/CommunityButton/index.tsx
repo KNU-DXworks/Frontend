@@ -35,8 +35,8 @@ const typeMapping: Record<CommunityType, { imgUrl: string; name: string }> = {
 export const CommunityButton = ({ type }: CommunityButtonProps) => {
     const { imgUrl, name } = typeMapping[type];
     return (
-        <button className="flex flex-col items-center border-0 rounded-xl shadow-md w-[74px] h-[80px] justify-center gap-0.5">
-            <img src={imgUrl} className="w-[40px] h-[50px] object-contain"></img>
+        <button className="flex flex-col items-center border-0 rounded-xl shadow-md w-[90px] h-[90px] justify-center gap-0.5">
+            <img src={imgUrl} className="w-[50px] h-[60px] object-contain"></img>
             <span className="text-xs font-bold text-point">{name}</span>
         </button>
     );

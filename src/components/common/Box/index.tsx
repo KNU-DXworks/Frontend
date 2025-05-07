@@ -7,5 +7,5 @@ interface BoxProps {
 }
 
 export const Box = ({ className, children }: BoxProps) => {
-    return <div className={clsx("rounded-xl shadow-md p-4 w-full flex flex-col", className)}>{children}</div>;
+    return <div className={clsx("rounded-xl shadow-md p-4 w-full flex", className)}>{children}</div>;
 };
