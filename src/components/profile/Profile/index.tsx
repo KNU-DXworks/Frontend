@@ -12,10 +12,11 @@ interface ProfileProps {
     label: string;
     info?: string;
     type?: "my" | "other";
-    isChecked?: boolean;
+    isLiked?: boolean;
+    onLikeClick?: () => void;
 }
 
-export const Profile = ({ userName, label, info, type = "other", isChecked }: ProfileProps) => {
+export const Profile = ({ userName, label, info, type = "other", isLiked, onLikeClick }: ProfileProps) => {
     const navigate = useNavigate();
 
     const handleClickInbody = () => {
@@ -23,22 +24,27 @@ export const Profile = ({ userName, label, info, type = "other", isChecked }: Pr
     };
 
     return (
-        <div className="flex flex-col items-center relative">
+        <div className="flex flex-col items-center relative min-h-[320px]">
             <img src={userIcon} className="w-[80px] h-[80px]"></img>
-            <Box className="items-center gap-2 absolute top-10 pt-10">
+            <Box className="items-center flex-col gap-2 absolute top-10 pt-10">
                 <div className="flex items-center gap-3">
                     <span className="text-point text-2xl font-bold">@{userName}</span>
                     {type === "other" &&
-                        (isChecked === false ? (
-                            <FaRegHeart className="w-[23px] h-[23px] text-gray" />
+                        (isLiked === false ? (
+                            <FaRegHeart className="w-[23px] h-[23px] text-gray cursor-pointer" onClick={onLikeClick} />
                         ) : (
-                            <FaHeart className="w-[23px] h-[23px] text-red" />
+                            <FaHeart className="w-[23px] h-[23px] text-red cursor-pointer" onClick={onLikeClick} />
                         ))}
                 </div>
                 <Badge type="primary" label={label}></Badge>
                 <div className="w-full flex flex-col">
                     <span className="font-bold text-darkGray">자기 소개</span>
-                    <TextArea type="secondary" placeholder="자기소개 글을 등록하세요." className="text-darkGray">
+                    <TextArea
+                        type="secondary"
+                        placeholder="자기소개 글을 등록하세요."
+                        className="text-darkGray"
+                        readOnly={type === "other"}
+                    >
                         {info}
                     </TextArea>
                 </div>
