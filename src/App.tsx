@@ -1,8 +1,14 @@
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import "./index.css";
+import { Router } from "./router";
 
 function App() {
-    return <div className="bg-green-100">안농ㄹ</div>;
+    return (
+        <BrowserRouter>
+            <Router></Router>
+        </BrowserRouter>
+    );
 }
 
 export default App;
