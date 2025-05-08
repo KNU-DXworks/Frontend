@@ -10,7 +10,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 
-export function SideMenu() {
+interface SideMenuProps {
+    onInterestPostClick?: () => void;
+    onNotInterestPostClick?: () => void;
+}
+
+export function SideMenu({ onInterestPostClick, onNotInterestPostClick }: SideMenuProps) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -22,8 +27,12 @@ export function SideMenu() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[100px] rounded-xl border-chat bg-white shadow-lg">
                 <DropdownMenuGroup>
-                    <DropdownMenuItem className="text-xs cursor-pointer">관심 게시물 등록</DropdownMenuItem>
-                    <DropdownMenuItem className="text-xs text-red cursor-pointer">관심 없음</DropdownMenuItem>
+                    <DropdownMenuItem className="text-xs cursor-pointer" onClick={onInterestPostClick}>
+                        관심 게시물 등록
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-xs text-red cursor-pointer" onClick={onNotInterestPostClick}>
+                        관심 없음
+                    </DropdownMenuItem>
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>

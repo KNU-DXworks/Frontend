@@ -22,7 +22,7 @@ export const MyPage = () => {
     };
 
     const handleGoal = () => {
-        navigate("/goal/refister");
+        navigate("/goal/register");
     };
 
     return (

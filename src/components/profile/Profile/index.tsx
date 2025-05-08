@@ -14,13 +14,19 @@ interface ProfileProps {
     type?: "my" | "other";
     isLiked?: boolean;
     onLikeClick?: () => void;
+    onChatClick?: () => void;
 }
 
-export const Profile = ({ userName, label, info, type = "other", isLiked, onLikeClick }: ProfileProps) => {
+export const Profile = ({ userName, label, info, type = "other", isLiked, onLikeClick, onChatClick }: ProfileProps) => {
     const navigate = useNavigate();
 
-    const handleClickInbody = () => {
-        navigate("/register/inbody");
+    const handleInbodyRegisterClick = () => {
+        navigate("/inbody/register");
+    };
+
+    const handleInfoModifyClick = () => {
+        console.log("수정 완료");
+        alert("수정 성공");
     };
 
     return (
@@ -49,11 +55,16 @@ export const Profile = ({ userName, label, info, type = "other", isLiked, onLike
                     </TextArea>
                 </div>
                 {type === "other" ? (
-                    <Button size="m" type="primary" label="채팅하러하기"></Button>
+                    <Button size="m" type="primary" label="채팅하러하기" onClick={onChatClick}></Button>
                 ) : (
                     <div className="w-full flex gap-3 justify-center">
-                        <Button size="s" type="primary" label="정보 수정하기"></Button>
-                        <Button size="s" type="primary" label="인바디 등록하기" onClick={handleClickInbody}></Button>
+                        <Button size="s" type="primary" label="정보 수정하기" onClick={handleInfoModifyClick}></Button>
+                        <Button
+                            size="s"
+                            type="primary"
+                            label="인바디 등록하기"
+                            onClick={handleInbodyRegisterClick}
+                        ></Button>
                     </div>
                 )}
             </Box>
