@@ -19,6 +19,7 @@ type CommunityType =
 
 interface CommunityButtonProps {
     type: CommunityType;
+    onClick?: () => void;
 }
 
 const typeMapping: Record<CommunityType, { imgUrl: string; name: string }> = {
@@ -32,10 +33,13 @@ const typeMapping: Record<CommunityType, { imgUrl: string; name: string }> = {
     muscularObesity: { imgUrl: muscularObesity, name: "근육형 비만" },
 };
 
-export const CommunityButton = ({ type }: CommunityButtonProps) => {
+export const CommunityButton = ({ type, onClick }: CommunityButtonProps) => {
     const { imgUrl, name } = typeMapping[type];
     return (
-        <button className="flex flex-col items-center border-0 rounded-xl shadow-md w-[90px] h-[90px] justify-center gap-0.5">
+        <button
+            onClick={onClick}
+            className="flex flex-col items-center border-0 rounded-xl shadow-md w-[90px] h-[90px] justify-center gap-0.5"
+        >
             <img src={imgUrl} className="w-[50px] h-[60px] object-contain"></img>
             <span className="text-xs font-bold text-point">{name}</span>
         </button>
