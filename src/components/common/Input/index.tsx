@@ -4,15 +4,17 @@ import { forwardRef } from "react";
 interface InputProps {
     placeholder?: string;
     size?: "m" | "s";
-    label: string;
+    label?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(({ placeholder, size = "m", label }, ref) => {
     return (
         <div className="flex flex-col gap-3">
-            <label htmlFor="input-field" className="font-bold">
-                {label}
-            </label>
+            {label && (
+                <label htmlFor="input-field" className="font-bold">
+                    {label}
+                </label>
+            )}
             <input
                 id="input-field"
                 ref={ref}
