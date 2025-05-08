@@ -7,28 +7,39 @@ import { RecommendedUser } from "@/components/home/RecommendedUser";
 import post1 from "@/assets/post/post1.svg";
 import profile from "@/assets/profile.svg";
 import { Post } from "@/components/common/Post";
+import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
+    const navigate = useNavigate();
+
+    const handleCommunity = (communityName: string) => {
+        navigate(`/community/${communityName}`);
+    };
+
+    const handleProfile = () => {
+        navigate("/profile/my");
+    };
+
     return (
         <div className="flex flex-col gap-8">
             <div className="flex flex-row justify-between items-center">
                 <img src={logo_sm}></img>
-                <img src={profile} className="cursor-pointer"></img>
+                <img src={profile} className="cursor-pointer" onClick={handleProfile}></img>
             </div>
 
             <div>
                 <text className="font-bold text-darkGray">커뮤니티 목록</text>
                 <div className="flex items-center gap-2">
-                    <CommunityButton type="skinny"></CommunityButton>
-                    <CommunityButton type="skinnyMuscle"></CommunityButton>
-                    <CommunityButton type="standard"></CommunityButton>
-                    <CommunityButton type="weightLoss"></CommunityButton>
+                    <CommunityButton type="skinny" onClick={() => handleCommunity("skinny")} />
+                    <CommunityButton type="skinnyMuscle" onClick={() => handleCommunity("skinnyMuscle")} />
+                    <CommunityButton type="standard" onClick={() => handleCommunity("standard")} />
+                    <CommunityButton type="weightLoss" onClick={() => handleCommunity("weightLoss")} />
                 </div>
                 <div className="flex items-center w-full gap-2">
-                    <CommunityButton type="muscle"></CommunityButton>
-                    <CommunityButton type="overWeight"></CommunityButton>
-                    <CommunityButton type="obesity"></CommunityButton>
-                    <CommunityButton type="muscularObesity"></CommunityButton>
+                    <CommunityButton type="muscle" onClick={() => handleCommunity("muscle")} />
+                    <CommunityButton type="overWeight" onClick={() => handleCommunity("overWeight")} />
+                    <CommunityButton type="obesity" onClick={() => handleCommunity("obesity")} />
+                    <CommunityButton type="muscularObesity" onClick={() => handleCommunity("muscularObesity")} />
                 </div>
             </div>
 
