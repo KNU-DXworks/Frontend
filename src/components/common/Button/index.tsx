@@ -1,16 +1,18 @@
 import clsx from "clsx";
 
 interface ButtonProps {
-    type?: "primary" | "secondary" | "login";
+    type?: "primary" | "secondary" | "login" | "gray";
     size?: "l" | "m" | "s";
     label: string;
     onClick?: () => void;
+    children?: React.ReactNode;
 }
 
 const typeStyles = {
     primary: "bg-point text-white",
     secondary: "bg-white",
     login: "bg-yellow",
+    gray: "bg-chat",
 };
 
 const sizeStyles = {
@@ -19,12 +21,17 @@ const sizeStyles = {
     s: "w-2/5 h-[40px] text-sm",
 };
 
-export const Button = ({ type = "primary", size = "l", label, onClick }: ButtonProps) => {
-    const className = clsx("shadow-md rounded-xl", typeStyles[type], sizeStyles[size]);
+export const Button = ({ type = "primary", size = "l", label, onClick, children }: ButtonProps) => {
+    const className = clsx(
+        "shadow-md rounded-xl flex items-center justify-center gap-4",
+        typeStyles[type],
+        sizeStyles[size],
+    );
 
     return (
         <button onClick={onClick} className={className}>
-            {label}
+            {children}
+            <span>{label}</span>
         </button>
     );
 };
