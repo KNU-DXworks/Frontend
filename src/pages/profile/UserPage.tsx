@@ -7,10 +7,13 @@ import { useState } from "react";
 import { History } from "@/components/profile/History";
 import { Box } from "@/components/common/Box";
 import { InbodyInfo } from "@/components/profile/InbodyInfo";
+import { useNavigate } from "react-router-dom";
 
 export const UserPage = () => {
     const [isPost, setIsPost] = useState(true);
     const [isLiked, setIsLiked] = useState(false);
+
+    const navigate = useNavigate();
 
     const handlePostClick = () => {
         setIsPost(true);
@@ -24,6 +27,10 @@ export const UserPage = () => {
         setIsLiked((prev) => !prev);
     };
 
+    const handleChatClick = (id: number) => {
+        navigate(`/chat/${id}`);
+    };
+
     return (
         <div className="flex flex-col gap-6">
             <Header></Header>
@@ -34,6 +41,7 @@ export const UserPage = () => {
                 type="other"
                 isLiked={isLiked}
                 onLikeClick={handleLikeClick}
+                onChatClick={() => handleChatClick(1)}
             ></Profile>
 
             <div className="flex flex-row gap-4">
