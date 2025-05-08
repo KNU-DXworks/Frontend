@@ -5,6 +5,7 @@ import { HomePage } from "./pages/home/HomePage";
 import { CommunityPage } from "./pages/community/CommunityPage";
 import { UserPage } from "./pages/profile/UserPage";
 import { MyPage } from "./pages/profile/MyPage";
+import { GoalRegisterPage } from "./pages/profile/GoalRegisterPage";
 
 export const Router = () => {
     return (
@@ -16,6 +17,8 @@ export const Router = () => {
 
                 <Route path="/profile/:id" element={<UserPage></UserPage>}></Route>
                 <Route path="/profile/my" element={<MyPage></MyPage>}></Route>
+
+                <Route path="/goal/register" element={<GoalRegisterPage></GoalRegisterPage>}></Route>
             </Route>
         </Routes>
     );
