@@ -3,6 +3,7 @@ import { Chat } from "@/components/chat/Chat";
 import { Header } from "@/components/common/Header";
 import { FaCirclePlus } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 type ChatItem = {
     type: "send" | "receive";
@@ -20,8 +21,8 @@ export const ChatPage = () => {
 
     const [inputValue, setInputValue] = useState("");
 
-    // 스크롤 자동 이동용
     const bottomRef = useRef<HTMLDivElement>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -46,6 +47,10 @@ export const ChatPage = () => {
         }
     };
 
+    const handleGoTransactionRegister = () => {
+        navigate("/transaction/register");
+    };
+
     return (
         <div className="flex flex-col gap-8 w-full max-w-[400px] mx-auto relative min-h-screen pb-[80px]">
             <Header />
@@ -65,7 +70,7 @@ export const ChatPage = () => {
             </div>
 
             <div className="fixed bottom-1 left-1/2 -translate-x-1/2 w-full max-w-[400px] flex items-center justify-between p-4 gap-2 bg-white">
-                <FaCirclePlus className="w-7 h-7 cursor-pointer" />
+                <FaCirclePlus className="w-7 h-7 cursor-pointer" onClick={handleGoTransactionRegister} />
 
                 <input
                     value={inputValue}
