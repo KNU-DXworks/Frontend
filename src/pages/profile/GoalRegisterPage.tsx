@@ -3,6 +3,7 @@ import { Chip } from "@/components/common/Chip";
 import { Header } from "@/components/common/Header";
 import { Input } from "@/components/common/Input";
 import { Title } from "@/components/common/Title";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const GoalRegisterPage = () => {
@@ -11,6 +12,14 @@ export const GoalRegisterPage = () => {
     const handleGoalRegister = () => {
         navigate("/profile/my");
     };
+
+    const [armGrade, setArmGrade] = useState("");
+    const [bodyGrade, setBodyGrade] = useState("");
+    const [legGrade, setLegGrade] = useState("");
+    const [bodyType, setBodyType] = useState("");
+
+    const gradeOptions = ["표준 이하", "표준", "표준 이상"];
+    const bodyTypes = ["마른 체형", "마른 근육형", "표준형", "감량형", "근육형", "체중형", "비만형", "근육 비만형"];
 
     return (
         <div className="flex flex-col gap-8">
@@ -33,25 +42,40 @@ export const GoalRegisterPage = () => {
                 <div className="flex flex-row justify-between">
                     <text>팔</text>
                     <div className="flex flex-row gap-2">
-                        <Chip label="표준 이하"></Chip>
-                        <Chip label="표준"></Chip>
-                        <Chip label="표준 이상"></Chip>
+                        {gradeOptions.map((grade) => (
+                            <Chip
+                                key={grade}
+                                label={grade}
+                                isSelected={armGrade === grade}
+                                onClick={() => setArmGrade(grade)}
+                            ></Chip>
+                        ))}
                     </div>
                 </div>
                 <div className="flex flex-row justify-between">
                     <text>몸통</text>
                     <div className="flex flex-row gap-2">
-                        <Chip label="표준 이하"></Chip>
-                        <Chip label="표준"></Chip>
-                        <Chip label="표준 이상"></Chip>
+                        {gradeOptions.map((grade) => (
+                            <Chip
+                                key={grade}
+                                label={grade}
+                                isSelected={bodyGrade === grade}
+                                onClick={() => setBodyGrade(grade)}
+                            ></Chip>
+                        ))}
                     </div>
                 </div>
                 <div className="flex flex-row justify-between">
                     <text>다리</text>
                     <div className="flex flex-row gap-2">
-                        <Chip label="표준 이하"></Chip>
-                        <Chip label="표준"></Chip>
-                        <Chip label="표준 이상"></Chip>
+                        {gradeOptions.map((grade) => (
+                            <Chip
+                                key={grade}
+                                label={grade}
+                                isSelected={legGrade === grade}
+                                onClick={() => setLegGrade(grade)}
+                            ></Chip>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -59,14 +83,14 @@ export const GoalRegisterPage = () => {
             <div className="flex flex-col gap-6">
                 <text className="font-bold">목표 체형</text>
                 <div className="flex flex-row flex-wrap gap-3">
-                    <Chip label="마른 체형"></Chip>
-                    <Chip label="마른 근육형"></Chip>
-                    <Chip label="표준형"></Chip>
-                    <Chip label="감량형"></Chip>
-                    <Chip label="근육형"></Chip>
-                    <Chip label=" 체중형"></Chip>
-                    <Chip label="비만형"></Chip>
-                    <Chip label="근육 비만형"></Chip>
+                    {bodyTypes.map((type) => (
+                        <Chip
+                            key={type}
+                            label={type}
+                            isSelected={bodyType === type}
+                            onClick={() => setBodyType(type)}
+                        ></Chip>
+                    ))}
                 </div>
             </div>
 
