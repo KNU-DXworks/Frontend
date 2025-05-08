@@ -1,24 +1,19 @@
 import clsx from "clsx";
-import { useState } from "react";
 
 interface ChipProps {
     label: string;
+    isSelected?: boolean;
+    onClick?: () => void;
 }
 
-export const Chip = ({ label }: ChipProps) => {
-    const [isClicked, SetIsClicked] = useState(false);
-
-    const handleClick = () => {
-        SetIsClicked((prev) => !prev);
-    };
-
+export const Chip = ({ label, isSelected, onClick }: ChipProps) => {
     return (
         <button
             className={clsx(
                 "flex items-center justify-center border rounded-xl bg-transparent w-fit py-2.5 px-3.5 text-sm",
-                isClicked ? "border-point text-point" : "border-gray text-gray",
+                isSelected ? "border-point text-point" : "border-gray text-gray",
             )}
-            onClick={handleClick}
+            onClick={onClick}
         >
             {label}
         </button>

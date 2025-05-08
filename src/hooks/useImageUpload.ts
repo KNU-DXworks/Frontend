@@ -4,6 +4,7 @@ export const useImageUpload = () => {
     const [isUploaded, setIsUploaded] = useState<boolean>(false);
     const [image, setImage] = useState<File | null>(null);
     const [previewURL, setPreviewURL] = useState<string>("");
+    const [fileType, setFileType] = useState<string>("");
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -18,12 +19,14 @@ export const useImageUpload = () => {
         setIsUploaded(true);
         setImage(file);
         setPreviewURL(URL.createObjectURL(file));
+        setFileType(file.type); // MIME 타입 저장 (예: image/png, application/pdf)
     }, []);
 
     return {
         isUploaded,
         image,
         previewURL,
+        fileType,
         handleImageUpload,
         handleImageChange,
         fileInputRef,

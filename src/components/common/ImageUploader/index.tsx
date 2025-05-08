@@ -12,20 +12,19 @@ export interface FileUploadProps {
 }
 
 export const ImageUploader = ({ className, onChange }: FileUploadProps) => {
-    const { isUploaded, previewURL, image, fileInputRef, handleImageUpload, handleImageChange } = useImageUpload();
+    const { isUploaded, previewURL, image, fileType, fileInputRef, handleImageUpload, handleImageChange } =
+        useImageUpload();
 
     useEffect(() => {
-        if (image) {
-            if (onChange) {
-                onChange(image);
-            }
+        if (image && onChange) {
+            onChange(image);
         }
     }, [image, onChange]);
 
     return (
         <div
             className={cn(
-                "flex w-full h-[400px] border-2 rounded-xl hover:cursor-pointer justify-center items-center border-dashed",
+                "flex w-full h-[280px] border-2 rounded-xl hover:cursor-pointer justify-center items-center border-darkGray border-dashed",
                 className,
             )}
             onClick={handleImageUpload}
@@ -36,13 +35,30 @@ export const ImageUploader = ({ className, onChange }: FileUploadProps) => {
                     <label>파일 업로드</label>
                 </div>
             ) : (
-                <img
-                    className="block w-full h-full rounded-[inherit] object-cover"
-                    src={previewURL}
-                    alt="uploaded-image"
-                />
+                <>
+                    {fileType.startsWith("image/") && (
+                        <img
+                            className="block w-full h-full rounded-[inherit] object-cover"
+                            src={previewURL}
+                            alt="uploaded-image"
+                        />
+                    )}
+                    {fileType === "application/pdf" && (
+                        <embed
+                            className="block w-full h-full rounded-[inherit] pointer-events-none"
+                            src={previewURL}
+                            type="application/pdf"
+                        />
+                    )}
+                </>
             )}
-            <input className="hidden" ref={fileInputRef} type="file" accept="image/*" onChange={handleImageChange} />
+            <input
+                className="hidden"
+                ref={fileInputRef}
+                type="file"
+                accept="image/*,application/pdf"
+                onChange={handleImageChange}
+            />
         </div>
     );
 };

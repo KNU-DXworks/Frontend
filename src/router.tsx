@@ -8,6 +8,7 @@ import { MyPage } from "./pages/profile/MyPage";
 import { GoalRegisterPage } from "./pages/profile/GoalRegisterPage";
 import { TransactionRegisterPage } from "./pages/transaction/TransactionRegisterPage";
 import { ChatPage } from "./pages/chat/ChatPage";
+import { PostRegisterPage } from "./pages/post/PostRegisterPage";
 
 export const Router = () => {
     return (
@@ -28,6 +29,7 @@ export const Router = () => {
                 ></Route>
 
                 <Route path="/chat/:id" element={<ChatPage></ChatPage>}></Route>
+                <Route path="/post/register" element={<PostRegisterPage></PostRegisterPage>}></Route>
             </Route>
         </Routes>
     );
