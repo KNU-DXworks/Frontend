@@ -1,9 +1,17 @@
+import { Button } from "@/components/common/Button";
 import { Chip } from "@/components/common/Chip";
 import { Header } from "@/components/common/Header";
 import { Input } from "@/components/common/Input";
 import { Title } from "@/components/common/Title";
+import { useNavigate } from "react-router-dom";
 
 export const GoalRegisterPage = () => {
+    const navigate = useNavigate();
+
+    const handleGoalRegister = () => {
+        navigate("/profile/my");
+    };
+
     return (
         <div className="flex flex-col gap-8">
             <Header></Header>
@@ -61,6 +69,8 @@ export const GoalRegisterPage = () => {
                     <Chip label="근육 비만형"></Chip>
                 </div>
             </div>
+
+            <Button onClick={handleGoalRegister} label="목표치 등록하기"></Button>
         </div>
     );
 };
