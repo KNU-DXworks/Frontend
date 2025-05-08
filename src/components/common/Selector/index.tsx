@@ -9,10 +9,10 @@ interface SelectorProps {
 export const Selector = ({ placeholder }: SelectorProps) => {
     return (
         <Select>
-            <SelectTrigger className="placeholder:text-lightGray">
-                <SelectValue placeholder={placeholder} className="placeholder-lightGreen" />
+            <SelectTrigger className="placeholder:text-lightGray outline-none">
+                <SelectValue placeholder={placeholder} />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border border-lightGray">
+            <SelectContent className="rounded-xl border border-chat outline-none">
                 <SelectGroup>
                     <SelectItem value="apple">1일</SelectItem>
                     <SelectItem value="banana">1주일</SelectItem>
