@@ -6,6 +6,7 @@ import { CommunityPage } from "./pages/community/CommunityPage";
 import { UserPage } from "./pages/profile/UserPage";
 import { MyPage } from "./pages/profile/MyPage";
 import { GoalRegisterPage } from "./pages/profile/GoalRegisterPage";
+import { TransactionRegisterPage } from "./pages/transaction/TransactionRegisterPage";
 
 export const Router = () => {
     return (
@@ -19,6 +20,11 @@ export const Router = () => {
                 <Route path="/profile/my" element={<MyPage></MyPage>}></Route>
 
                 <Route path="/goal/register" element={<GoalRegisterPage></GoalRegisterPage>}></Route>
+
+                <Route
+                    path="/transaction/register"
+                    element={<TransactionRegisterPage></TransactionRegisterPage>}
+                ></Route>
             </Route>
         </Routes>
     );
