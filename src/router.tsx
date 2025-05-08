@@ -3,7 +3,8 @@ import { RootLayout } from "./app/layout/RootLayout";
 import { LoginPage } from "./pages/auth/LoginPage";
 import { HomePage } from "./pages/home/HomePage";
 import { CommunityPage } from "./pages/community/CommunityPage";
-import { UserPage } from "./pages/user/UserPage";
+import { UserPage } from "./pages/profile/UserPage";
+import { MyPage } from "./pages/profile/MyPage";
 
 export const Router = () => {
     return (
@@ -14,6 +15,7 @@ export const Router = () => {
                 <Route path="/community/:type" element={<CommunityPage></CommunityPage>}></Route>
 
                 <Route path="/profile/:id" element={<UserPage></UserPage>}></Route>
+                <Route path="/profile/my" element={<MyPage></MyPage>}></Route>
             </Route>
         </Routes>
     );
