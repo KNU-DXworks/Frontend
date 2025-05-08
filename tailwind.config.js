@@ -58,6 +58,7 @@ export default {
                 gray: "#828387",
                 lightGray: "#B7B7B7",
                 chat: "#EDEDED",
+                back: "#FAFAFA",
                 white: "#fff",
                 black: "#000",
                 yellow: "#FDE500",
