@@ -9,6 +9,7 @@ import { GoalRegisterPage } from "./pages/profile/GoalRegisterPage";
 import { TransactionRegisterPage } from "./pages/transaction/TransactionRegisterPage";
 import { ChatPage } from "./pages/chat/ChatPage";
 import { PostRegisterPage } from "./pages/post/PostRegisterPage";
+import { InbodyRegisterPage } from "./pages/profile/InbodyRegisterPage";
 
 export const Router = () => {
     return (
@@ -30,6 +31,7 @@ export const Router = () => {
 
                 <Route path="/chat/:id" element={<ChatPage></ChatPage>}></Route>
                 <Route path="/post/register" element={<PostRegisterPage></PostRegisterPage>}></Route>
+                <Route path="/inbody/register" element={<InbodyRegisterPage></InbodyRegisterPage>}></Route>
             </Route>
         </Routes>
     );
