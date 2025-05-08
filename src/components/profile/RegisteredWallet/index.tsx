@@ -7,7 +7,7 @@ interface RegisteredWalletProps {
 
 export const RegisteredWallet = ({ coin }: RegisteredWalletProps) => {
     return (
-        <Box className="gap-1">
+        <Box className="gap-1 flex-col">
             <span className="text-darkGray font-bold">나의 지갑</span>
             <div className="flex items-center justify-between">
                 <div className="flex gap-2.5">

@@ -5,7 +5,7 @@ interface SectionHeaderProps {
     label: string;
     type?: "primary" | "secondary";
     goal?: string;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 export const SectionHeader = ({ label, type = "primary", goal = "", onClick }: SectionHeaderProps) => {
