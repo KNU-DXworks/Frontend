@@ -12,7 +12,7 @@ const Receive = ({ imgUrl = userIcon, date, children }: ChatProps) => {
     return (
         <div className="flex gap-4">
             <img src={imgUrl} className="w-[40px] h-[40px] rounded-full" />
-            <div className="py-2 px-3 rounded-xl bg-chat text-sm">{children}</div>
+            <div className="py-2 px-3 rounded-xl bg-chat text-sm max-w-[220px]">{children}</div>
             <span className="text-lightGray text-[10px] self-end">{date}</span>
         </div>
     );
@@ -22,7 +22,7 @@ const Send = ({ imgUrl = userIcon, date, children }: ChatProps) => {
     return (
         <div className="flex gap-4 justify-end">
             <span className="text-lightGray text-[10px] self-end">{date}</span>
-            <div className="py-2 px-3 rounded-xl bg-point text-white text-sm">{children}</div>
+            <div className="py-2 px-3 rounded-xl bg-point text-white text-sm max-w-[220px]">{children}</div>
             <img src={imgUrl} className="w-[40px] h-[40px] rounded-full" />
         </div>
     );
