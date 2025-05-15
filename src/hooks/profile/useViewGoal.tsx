@@ -12,7 +12,7 @@ type GoalGroup =
     | "OBESITY"
     | "MUSCULAR_OBESITY";
 
-interface ViewGoalRequestBody {
+interface ViewGoalResponseBody {
     weight: number;
     muscle: number;
     fat: number;
@@ -24,7 +24,7 @@ interface ViewGoalRequestBody {
 }
 
 const viewGoal = async () => {
-    const response = await fetchInstance.get<ViewGoalRequestBody>("/api/goal");
+    const response = await fetchInstance.get<ViewGoalResponseBody>("/api/goal");
     return response.data;
 };
 
