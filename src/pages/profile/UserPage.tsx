@@ -7,11 +7,17 @@ import { useState } from "react";
 import { History } from "@/components/profile/History";
 import { Box } from "@/components/common/Box";
 import { InbodyInfo } from "@/components/profile/InbodyInfo";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useInterestUser } from "@/hooks/profile/useInterestUser";
 
 export const UserPage = () => {
     const [isPost, setIsPost] = useState(true);
     const [isLiked, setIsLiked] = useState(false);
+
+    const { id } = useParams<{ id: string }>();
+    console.log(id);
+    const userId = parseInt(id ?? "");
+    const { registerInterest, deleteInterest } = useInterestUser();
 
     const navigate = useNavigate();
 
@@ -24,7 +30,15 @@ export const UserPage = () => {
     };
 
     const handleLikeClick = () => {
-        setIsLiked((prev) => !prev);
+        if (isLiked) {
+            deleteInterest(userId, {
+                onSuccess: () => setIsLiked(false),
+            });
+        } else {
+            registerInterest(userId, {
+                onSuccess: () => setIsLiked(true),
+            });
+        }
     };
 
     const handleChatClick = (id: number) => {
