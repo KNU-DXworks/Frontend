@@ -3,23 +3,31 @@ import { Chip } from "@/components/common/Chip";
 import { Header } from "@/components/common/Header";
 import { Input } from "@/components/common/Input";
 import { Title } from "@/components/common/Title";
-import { useState } from "react";
+import { useRegisterGoal } from "@/hooks/profile/useRegisterGoal";
 import { useNavigate } from "react-router-dom";
+import { gradeOptions } from "@/app/constants/gradeOptions";
+import { bodyTypeOptions } from "@/app/constants/bodyTypeOptions";
+
+type Grade = "BELOW_STANDARD" | "STANDARD" | "ABOVE_STANDARD";
+type BodyType =
+    | "SKINNY"
+    | "SKINNY_MUSCLE"
+    | "STANDARD"
+    | "WEIGHT_LOSS"
+    | "MUSCLE"
+    | "WEIGHT"
+    | "OBESITY"
+    | "MUSCULAR_OBESITY";
 
 export const GoalRegisterPage = () => {
+    const { weightRef, muscleRef, fatRef, bmiRef, arm, setArm, body, setBody, leg, setLeg, goalGroup, setGoalGroup } =
+        useRegisterGoal();
+
     const navigate = useNavigate();
 
     const handleGoalRegister = () => {
         navigate("/profile/my");
     };
-
-    const [armGrade, setArmGrade] = useState("");
-    const [bodyGrade, setBodyGrade] = useState("");
-    const [legGrade, setLegGrade] = useState("");
-    const [bodyType, setBodyType] = useState("");
-
-    const gradeOptions = ["표준 이하", "표준", "표준 이상"];
-    const bodyTypes = ["마른 체형", "마른 근육형", "표준형", "감량형", "근육형", "체중형", "비만형", "근육 비만형"];
 
     return (
         <div className="flex flex-col gap-8">
@@ -28,12 +36,12 @@ export const GoalRegisterPage = () => {
 
             <div className="flex flex-col gap-3">
                 <div className="flex flex-row gap-4">
-                    <Input label="체중"></Input>
-                    <Input label="골격근량"></Input>
+                    <Input ref={weightRef} label="체중"></Input>
+                    <Input ref={muscleRef} label="골격근량"></Input>
                 </div>
                 <div className="flex flex-row gap-4">
-                    <Input label="체지방률"></Input>
-                    <Input label="BMI"></Input>
+                    <Input ref={fatRef} label="체지방률"></Input>
+                    <Input ref={bmiRef} label="BMI"></Input>
                 </div>
             </div>
 
@@ -44,10 +52,10 @@ export const GoalRegisterPage = () => {
                     <div className="flex flex-row gap-2">
                         {gradeOptions.map((grade) => (
                             <Chip
-                                key={grade}
-                                label={grade}
-                                isSelected={armGrade === grade}
-                                onClick={() => setArmGrade(grade)}
+                                key={grade.key}
+                                label={grade.value}
+                                isSelected={arm === grade.key}
+                                onClick={() => setArm(grade.key as Grade)}
                             ></Chip>
                         ))}
                     </div>
@@ -57,10 +65,10 @@ export const GoalRegisterPage = () => {
                     <div className="flex flex-row gap-2">
                         {gradeOptions.map((grade) => (
                             <Chip
-                                key={grade}
-                                label={grade}
-                                isSelected={bodyGrade === grade}
-                                onClick={() => setBodyGrade(grade)}
+                                key={grade.key}
+                                label={grade.value}
+                                isSelected={body === grade.key}
+                                onClick={() => setBody(grade.key as Grade)}
                             ></Chip>
                         ))}
                     </div>
@@ -70,10 +78,10 @@ export const GoalRegisterPage = () => {
                     <div className="flex flex-row gap-2">
                         {gradeOptions.map((grade) => (
                             <Chip
-                                key={grade}
-                                label={grade}
-                                isSelected={legGrade === grade}
-                                onClick={() => setLegGrade(grade)}
+                                key={grade.key}
+                                label={grade.value}
+                                isSelected={leg === grade.key}
+                                onClick={() => setLeg(grade.key as Grade)}
                             ></Chip>
                         ))}
                     </div>
@@ -83,12 +91,12 @@ export const GoalRegisterPage = () => {
             <div className="flex flex-col gap-6">
                 <text className="font-bold">목표 체형</text>
                 <div className="flex flex-row flex-wrap gap-3">
-                    {bodyTypes.map((type) => (
+                    {bodyTypeOptions.map((type) => (
                         <Chip
-                            key={type}
-                            label={type}
-                            isSelected={bodyType === type}
-                            onClick={() => setBodyType(type)}
+                            key={type.key}
+                            label={type.value}
+                            isSelected={goalGroup === type.key}
+                            onClick={() => setGoalGroup(type.key as BodyType)}
                         ></Chip>
                     ))}
                 </div>
