@@ -10,28 +10,33 @@ import { TransactionRegisterPage } from "./pages/transaction/TransactionRegister
 import { ChatPage } from "./pages/chat/ChatPage";
 import { PostRegisterPage } from "./pages/post/PostRegisterPage";
 import { InbodyRegisterPage } from "./pages/profile/InbodyRegisterPage";
+import { ProtectedRoute } from "./app/layout/ProtectedRoute";
 
 export const Router = () => {
     return (
         <Routes>
-            <Route path="/" element={<RootLayout></RootLayout>}>
-                <Route path="/" element={<HomePage></HomePage>}></Route>
-                <Route path="/login" element={<LoginPage></LoginPage>}></Route>
-                <Route path="/community/:type" element={<CommunityPage></CommunityPage>}></Route>
+            <Route path="/" element={<RootLayout />}>
 
-                <Route path="/profile/:id" element={<UserPage></UserPage>}></Route>
-                <Route path="/profile/my" element={<MyPage></MyPage>}></Route>
+                <Route path="login" element={<LoginPage />} />
 
-                <Route path="/goal/register" element={<GoalRegisterPage></GoalRegisterPage>}></Route>
+                <Route element={<ProtectedRoute />}>
+                    <Route index element={<HomePage />} />
 
-                <Route
-                    path="/transaction/register"
-                    element={<TransactionRegisterPage></TransactionRegisterPage>}
-                ></Route>
+                    <Route path="community/:type" element={<CommunityPage />} />
 
-                <Route path="/chat/:id" element={<ChatPage></ChatPage>}></Route>
-                <Route path="/post/register" element={<PostRegisterPage></PostRegisterPage>}></Route>
-                <Route path="/inbody/register" element={<InbodyRegisterPage></InbodyRegisterPage>}></Route>
+                    <Route path="profile/:id" element={<UserPage />} />
+                    <Route path="profile/my" element={<MyPage />} />
+
+                    <Route path="goal/register" element={<GoalRegisterPage />} />
+
+                    <Route path="transaction/register" element={<TransactionRegisterPage />} />
+
+                    <Route path="chat/:id" element={<ChatPage />} />
+
+                    <Route path="post/register" element={<PostRegisterPage />} />
+                    
+                    <Route path="inbody/register" element={<InbodyRegisterPage />} />
+                </Route>
             </Route>
         </Routes>
     );
