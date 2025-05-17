@@ -12,10 +12,13 @@ import { InbodyInfo } from "@/components/profile/InbodyInfo";
 import { RegisteredWallet } from "@/components/profile/RegisteredWallet";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useViewGoal } from "@/hooks/profile/useViewGoal";
 
 export const MyPage = () => {
     const [isRegistered, setIsRegistered] = useState(false);
     const navigate = useNavigate();
+
+    const { data: goal } = useViewGoal();
 
     const handleWalletRegister = () => {
         setIsRegistered(true);
@@ -44,9 +47,24 @@ export const MyPage = () => {
             <Box className="flex-col gap-4">
                 <SectionHeader type="secondary" label="목표치" goal="근육형" onClick={handleGoal}></SectionHeader>
                 <div className="flex justify-evenly">
-                    <InfoCard type="secondary" imgUrl={weightIcon} label="제중" desc="62.8"></InfoCard>
-                    <InfoCard type="secondary" imgUrl={muscleIcon} label="골격근량" desc="31.7"></InfoCard>
-                    <InfoCard type="secondary" imgUrl={fatIcon} label="지방량" desc="6.4"></InfoCard>
+                    <InfoCard
+                        type="secondary"
+                        imgUrl={weightIcon}
+                        label="제중"
+                        desc={goal?.weight != null ? `${goal.weight} kg` : "-"}
+                    ></InfoCard>
+                    <InfoCard
+                        type="secondary"
+                        imgUrl={muscleIcon}
+                        label="골격근량"
+                        desc={goal?.muscle != null ? `${goal.muscle} kg` : "-"}
+                    ></InfoCard>
+                    <InfoCard
+                        type="secondary"
+                        imgUrl={fatIcon}
+                        label="지방량"
+                        desc={goal?.fat != null ? `${goal.fat} %` : "-"}
+                    ></InfoCard>
                 </div>
             </Box>
 
