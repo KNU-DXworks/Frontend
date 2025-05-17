@@ -64,7 +64,7 @@ export const useRegisterGoal = () => {
         },
         onError: (error) => {
             console.error("Error response:", error.message);
-            alert("목표 등록록에 실패하였습니다.");
+            alert("목표 등록에 실패하였습니다.");
         },
     });
 
