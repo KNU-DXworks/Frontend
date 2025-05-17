@@ -22,8 +22,21 @@ type BodyType =
     | "MUSCULAR_OBESITY";
 
 export const GoalRegisterPage = () => {
-    const { weightRef, muscleRef, fatRef, bmiRef, arm, setArm, body, setBody, leg, setLeg, goalGroup, setGoalGroup } =
-        useRegisterGoal();
+    const {
+        weightRef,
+        muscleRef,
+        fatRef,
+        bmiRef,
+        arm,
+        setArm,
+        body,
+        setBody,
+        leg,
+        setLeg,
+        goalGroup,
+        setGoalGroup,
+        handleRegisterClick,
+    } = useRegisterGoal();
 
     const { data: goalData } = useViewGoal();
     const navigate = useNavigate();
@@ -45,6 +58,7 @@ export const GoalRegisterPage = () => {
     }, [goalData]);
 
     const handleGoalRegister = () => {
+        handleRegisterClick();
         navigate("/profile/my");
     };
 

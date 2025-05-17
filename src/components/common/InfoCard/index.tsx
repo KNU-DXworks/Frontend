@@ -4,7 +4,7 @@ interface InfoCardProps {
     type?: "primary" | "secondary";
     imgUrl?: string;
     label: string;
-    desc: string;
+    desc?: string | number;
     onClick?: () => void;
 }
 
@@ -19,7 +19,7 @@ export const InfoCard = ({ type = "primary", imgUrl = userIcon, label, desc, onC
             {type === "primary" ? (
                 <span className="text-xs text-gray">{desc} 사용자</span>
             ) : (
-                <span className="text-xs text-gray">{desc} kg</span>
+                <span className="text-xs text-gray">{desc}</span>
             )}
         </div>
     );

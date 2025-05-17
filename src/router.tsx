@@ -11,13 +11,14 @@ import { ChatPage } from "./pages/chat/ChatPage";
 import { PostRegisterPage } from "./pages/post/PostRegisterPage";
 import { InbodyRegisterPage } from "./pages/profile/InbodyRegisterPage";
 import { ProtectedRoute } from "./app/layout/ProtectedRoute";
+import { RedirectPage } from "./pages/auth/RedirectPage";
 
 export const Router = () => {
     return (
         <Routes>
             <Route path="/" element={<RootLayout />}>
-
                 <Route path="login" element={<LoginPage />} />
+                <Route path="redirection" element={<RedirectPage></RedirectPage>}></Route>
 
                 <Route element={<ProtectedRoute />}>
                     <Route index element={<HomePage />} />
@@ -34,7 +35,7 @@ export const Router = () => {
                     <Route path="chat/:id" element={<ChatPage />} />
 
                     <Route path="post/register" element={<PostRegisterPage />} />
-                    
+
                     <Route path="inbody/register" element={<InbodyRegisterPage />} />
                 </Route>
             </Route>

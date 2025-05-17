@@ -72,7 +72,7 @@ export const CommunityPage = () => {
 
             <button
                 className="rounded-full bg-point w-[60px] h-[60px] bg-[url('/src/assets/pencil.svg')] bg-no-repeat bg-center self-end cursor-pointer"
-                onClick={() => navigate("/post/register")}
+                onClick={() => navigate(`/post/register/${type}`)}
             ></button>
         </div>
     );

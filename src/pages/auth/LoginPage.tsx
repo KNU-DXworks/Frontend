@@ -4,13 +4,11 @@ import { RiKakaoTalkFill } from "react-icons/ri";
 // import { useNavigate } from "react-router-dom";
 
 const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
-const POSTMAN_REDIRECT_URI = import.meta.env.VITE_POSTMAN_REDIRECT_URI;
+const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 
-const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${POSTMAN_REDIRECT_URI}&response_type=code`;
+const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 export const LoginPage = () => {
-    // const navigate = useNavigate();
-
     const handleKakaoLogin = () => {
         window.location.href = kakaoAuthUrl;
     };
