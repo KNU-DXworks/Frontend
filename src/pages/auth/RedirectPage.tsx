@@ -6,7 +6,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 export const RedirectPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { mutate: signIn } = useSignIn();
+    const { mutateAsync: signIn } = useSignIn();
     const { setAccessToken, setRefreshToken } = useAuthStore();
     const isCalledRef = useRef(false);
 
@@ -17,17 +17,21 @@ export const RedirectPage = () => {
 
         isCalledRef.current = true;
 
-        signIn(code, {
-            onSuccess: (res) => {
+        (async () => {
+            try {
+                const res = await signIn(code);
                 console.log("로그인 성공, 토큰:", res.accessToken);
                 setAccessToken(res.accessToken);
                 setRefreshToken(res.refreshToken);
                 navigate("/");
-            },
-            onError: (err) => {
-                alert("로그인 실패: " + err.message);
-            },
-        });
+            } catch (err) {
+                if (err instanceof Error) {
+                    alert("로그인 실패: " + err.message);
+                } else {
+                    alert("알 수 없는 에러 발생");
+                }
+            }
+        })();
     }, []);
 
     return <div>로그인 중...</div>;
