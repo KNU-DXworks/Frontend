@@ -4,7 +4,7 @@ export const bodyTypeOptions = [
     { key: "STANDARD", value: "표준형" },
     { key: "WEIGHT_LOSS", value: "감량형" },
     { key: "MUSCLE", value: "근육형" },
-    { key: "WEIGHT", value: "체중형" },
+    { key: "OVERWEIGHT", value: "과체중형" },
     { key: "OBESITY", value: "비만형" },
     { key: "MUSCULAR_OBESITY", value: "근육 비만형" },
-  ];
+];
