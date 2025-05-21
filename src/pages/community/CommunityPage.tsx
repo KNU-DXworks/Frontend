@@ -2,52 +2,34 @@ import { Header } from "@/components/common/Header";
 import { Post } from "@/components/common/Post";
 import { Title } from "@/components/common/Title";
 
-import post1 from "@/assets/post/post1.svg";
 import { useNavigate, useParams } from "react-router-dom";
+import { useViewCommunity } from "@/hooks/community/useViewCommunity";
 
 export const CommunityPage = () => {
-    const navigate = useNavigate();
-    const { type } = useParams<{ type: keyof typeof communityTypes }>();
-
     const communityTypes = {
-        skinny: "마른 체형",
-        skinnyMuscle: "마른 근육형",
-        standard: "표준형",
-        weightLoss: "감량형",
-        muscle: "근육형",
-        overWeight: "체중형",
-        obesity: "비만형",
-        muscularObesity: "근육 비만형",
+        SKINNY: "마른 체형",
+        SKINNY_MUSCLE: "마른 근육형",
+        STANDARD: "표준형",
+        WEIGHT_LOSS: "감량형",
+        MUSCLE: "근육형",
+        OVERWEIGHT: "과체중형",
+        OBESITY: "비만형",
+        MUSCULAR_OBESITY: "근육 비만형",
+        NONE: "미지정",
     };
 
-    const community = type ? communityTypes[type] : "";
+    const navigate = useNavigate();
+    const { type } = useParams<{ type: keyof typeof communityTypes }>();
+    const community = type ? communityTypes[type] : "NONE";
+    const { data } = useViewCommunity(type as keyof typeof communityTypes);
 
-    const posts = [
-        {
-            id: 1,
-            name: "조민주",
-            time: "3시간 전",
-            label: "근육형",
-            text: "일주일에 -3kg씩 건강하게 식단하고 싶으신가요? 그렇다면 저를 팔로우하고 맞춤형 식단을 받아보세요. 저는 단지 일반적인 샐러드만 추천해주는 사람이 아닙니다. 그러니 후회하지 않으실겁니다 만약",
-            postImgUrl: post1,
-        },
-        {
-            id: 2,
-            name: "조민주",
-            time: "3시간 전",
-            label: "근육형",
-            text: "일주일에 -3kg씩 건강하게 식단하고 싶으신가요? 그렇다면 저를 팔로우하고 맞춤형 식단을 받아보세요. 저는 단지 일반적인 샐러드만 추천해주는 사람이 아닙니다. 그러니 후회하지 않으실겁니다 만약",
-            postImgUrl: post1,
-        },
-        {
-            id: 3,
-            name: "조민주",
-            time: "3시간 전",
-            label: "근육형",
-            text: "일주일에 -3kg씩 건강하게 식단하고 싶으신가요? 그렇다면 저를 팔로우하고 맞춤형 식단을 받아보세요. 저는 단지 일반적인 샐러드만 추천해주는 사람이 아닙니다. 그러니 후회하지 않으실겁니다 만약",
-            postImgUrl: post1,
-        },
-    ];
+    const handleUserProfileClick = (id: number) => {
+        navigate(`/profile/${id}`);
+    };
+
+    const handleGoToRegister = () => {
+        navigate(`/post/register?communityType=${type}`);
+    };
 
     return (
         <div className="flex flex-col gap-6">
@@ -58,21 +40,24 @@ export const CommunityPage = () => {
             ></Title>
 
             <div className="flex flex-col gap-2">
-                {posts.map((post) => (
+                {data?.posts?.map((post) => (
                     <Post
-                        key={post.id}
-                        name={post.name}
-                        time={post.time}
-                        label={post.label}
-                        text={post.text}
-                        postImgUrl={post.postImgUrl}
+                        key={post.postId}
+                        userImgUrl={post.profileImg}
+                        name={post.userName}
+                        time={post.createdDate}
+                        label={communityTypes[post.bodyType as keyof typeof communityTypes]}
+                        text={post.content}
+                        postImgUrl={post.fileUrl}
+                        postImgType={post.fileType}
+                        onClick={() => handleUserProfileClick(post.userId)}
                     />
                 ))}
             </div>
 
             <button
-                className="rounded-full bg-point w-[60px] h-[60px] bg-[url('/src/assets/pencil.svg')] bg-no-repeat bg-center self-end cursor-pointer"
-                onClick={() => navigate(`/post/register/${type}`)}
+                className="fixed bottom-5 rounded-full bg-point w-[60px] h-[60px] bg-[url('/src/assets/pencil.svg')] bg-no-repeat bg-center self-end cursor-pointer"
+                onClick={handleGoToRegister}
             ></button>
         </div>
     );
