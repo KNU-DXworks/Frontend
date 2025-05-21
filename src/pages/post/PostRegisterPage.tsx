@@ -1,15 +1,29 @@
-// src/pages/PostRegisterPage.tsx
 import { Button } from "@/components/common/Button";
 import { Chip } from "@/components/common/Chip";
+import { FileUploader } from "@/components/common/FileUploader";
 import { Header } from "@/components/common/Header";
-import { ImageUploader } from "@/components/common/ImageUploader";
 import { TextArea } from "@/components/common/TextArea";
 import { Title } from "@/components/common/Title";
 import { useRegisterPost } from "@/hooks/post/useRegisterPost";
+import { useSearchParams } from "react-router-dom";
+
+type Community =
+    | "SKINNY"
+    | "SKINNY_MUSCLE"
+    | "STANDARD"
+    | "WEIGHT_LOSS"
+    | "MUSCLE"
+    | "OVERWEIGHT"
+    | "OBESITY"
+    | "MUSCULAR_OBESITY";
 
 export const PostRegisterPage = () => {
-    const communityId = "123"; // 실제 ID로 교체
-    const { isAll, setIsAll, contentRef, handleFileChange, handleRegisterClick } = useRegisterPost({ communityId });
+    const [searchParams] = useSearchParams();
+    const communityType = searchParams.get("communityType");
+
+    const { isAll, setIsAll, contentRef, handleFileChange, handleRegisterClick } = useRegisterPost({
+        community: communityType as Community,
+    });
 
     return (
         <div className="flex flex-col gap-8">
@@ -25,9 +39,9 @@ export const PostRegisterPage = () => {
                 </div>
             </div>
 
-            <ImageUploader onChange={handleFileChange} />
+            <FileUploader onChange={handleFileChange} />
 
-            {isAll && <TextArea ref={contentRef} placeholder="문구 추가..." className="border-chat" />}
+            <TextArea ref={contentRef} placeholder="문구 추가..." className="border-chat" />
 
             <Button label="공유하기" onClick={handleRegisterClick} />
         </div>
