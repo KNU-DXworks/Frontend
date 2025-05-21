@@ -29,6 +29,25 @@ export const createInstance = (config: AxiosRequestConfig): AxiosInstance => {
         (error: unknown) => Promise.reject(error),
     );
 
+    instance.interceptors.response.use(
+        (response) => response,
+        (error) => {
+            if (error.response?.status === 401) {
+                const { logout } = useAuthStore.getState();
+
+                if (typeof window !== "undefined") {
+                    alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+                }
+
+                logout();
+
+                window.location.href = "/login";
+            }
+
+            return Promise.reject(error);
+        },
+    );
+
     return instance;
 };
 
