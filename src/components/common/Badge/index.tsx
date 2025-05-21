@@ -1,5 +1,5 @@
 interface BadgeProps {
-    type: "primary" | "secondary";
+    type: "primary" | "secondary" | "sub" | "all";
     label: string;
 }
 
@@ -11,6 +11,14 @@ const badgeStyles = {
     secondary: {
         wrapper: "bg-lightRed",
         text: "text-red",
+    },
+    sub: {
+        wrapper: "bg-lightPurple",
+        text: "text-purple",
+    },
+    all: {
+        wrapper: "bg-skyBlue",
+        text: "text-blue",
     },
 };
 
