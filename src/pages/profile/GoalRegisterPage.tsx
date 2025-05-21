@@ -17,7 +17,7 @@ type BodyType =
     | "STANDARD"
     | "WEIGHT_LOSS"
     | "MUSCLE"
-    | "WEIGHT"
+    | "OVERWEIGHT"
     | "OBESITY"
     | "MUSCULAR_OBESITY";
 
@@ -27,35 +27,37 @@ export const GoalRegisterPage = () => {
         muscleRef,
         fatRef,
         bmiRef,
-        arm,
-        setArm,
-        body,
-        setBody,
-        leg,
-        setLeg,
-        goalGroup,
-        setGoalGroup,
+        armGrade,
+        setArmGrade,
+        bodyGrade,
+        setBodyGrade,
+        legGrade,
+        setLegGrade,
+        bodyType,
+        setBodyType,
         handleRegisterClick,
     } = useRegisterGoal();
 
-    const { data: goalData } = useViewGoal();
+    const { data } = useViewGoal();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!goalData) return;
+        if (!data) return;
 
-        const { weight, muscle, fat, bmi, arm, body, leg, goalGroup } = goalData;
+        const { weight, muscle, fat, bmi, armGrade, bodyGrade, legGrade, bodyType } = data;
 
         if (weightRef.current) weightRef.current.value = weight.toString();
         if (muscleRef.current) muscleRef.current.value = muscle.toString();
         if (fatRef.current) fatRef.current.value = fat.toString();
         if (bmiRef.current) bmiRef.current.value = bmi.toString();
 
-        if (arm) setArm(arm);
-        if (body) setBody(body);
-        if (leg) setLeg(leg);
-        if (goalGroup) setGoalGroup(goalGroup);
-    }, [goalData]);
+        if (armGrade) setArmGrade(armGrade);
+        if (bodyGrade) setBodyGrade(bodyGrade);
+        if (legGrade) setLegGrade(legGrade);
+        if (bodyType) setBodyType(bodyType);
+    }, [data]);
+
+    console.log(data);
 
     const handleGoalRegister = () => {
         handleRegisterClick();
@@ -69,21 +71,21 @@ export const GoalRegisterPage = () => {
 
             <div className="flex flex-col gap-3">
                 <div className="flex flex-row gap-4">
-                    <Input ref={weightRef} label="체중" />
-                    <Input ref={muscleRef} label="골격근량" />
+                    <Input ref={weightRef} label="체중" unit="kg" />
+                    <Input ref={muscleRef} label="골격근량" unit="kg" />
                 </div>
                 <div className="flex flex-row gap-4">
-                    <Input ref={fatRef} label="체지방률" />
-                    <Input ref={bmiRef} label="BMI" />
+                    <Input ref={fatRef} label="체지방률" unit="%" />
+                    <Input ref={bmiRef} label="BMI" unit="kg/㎡" />
                 </div>
             </div>
 
             <div className="flex flex-col gap-6">
                 <span className="font-bold">부위별 근육량</span>
                 {[
-                    { label: "팔", selected: arm, setter: setArm },
-                    { label: "몸통", selected: body, setter: setBody },
-                    { label: "다리", selected: leg, setter: setLeg },
+                    { label: "팔", selected: armGrade, setter: setArmGrade },
+                    { label: "몸통", selected: bodyGrade, setter: setBodyGrade },
+                    { label: "다리", selected: legGrade, setter: setLegGrade },
                 ].map(({ label, selected, setter }) => (
                     <div className="flex flex-row justify-between" key={label}>
                         <span>{label}</span>
@@ -108,8 +110,8 @@ export const GoalRegisterPage = () => {
                         <Chip
                             key={type.key}
                             label={type.value}
-                            isSelected={goalGroup === type.key}
-                            onClick={() => setGoalGroup(type.key as BodyType)}
+                            isSelected={bodyType === type.key}
+                            onClick={() => setBodyType(type.key as BodyType)}
                         />
                     ))}
                 </div>
