@@ -1,6 +1,12 @@
 import { fetchInstance } from "@/app/config/axios";
 import { useQuery } from "@tanstack/react-query";
 
+interface ApiResponse<T> {
+    code: number;
+    message: string;
+    value: T;
+}
+
 type BodyLevel = "BELOW_STANDARD" | "STANDARD" | "ABOVE_STANDARD";
 type CommunityType =
     | "SKINNY"
@@ -8,52 +14,49 @@ type CommunityType =
     | "STANDARD"
     | "WEIGHT_LOSS"
     | "MUSCLE"
-    | "WEIGHT"
+    | "OVERWEIGHT"
     | "OBESITY"
     | "MUSCULAR_OBESITY";
+type Gender = "MALE" | "FEMALE";
+type PostType = "SUBSCRIBE" | "NORMAL";
 
-interface ViewUserProfileReponseBody {
-    profileId: number;
+interface ViewUserProfileResponseBody {
+    userId: number;
     userName: string;
-    introduce: string;
-    communityId: CommunityType;
-    isLiked: boolean;
-    history: [
-        {
-            date: string;
-            type: string;
-        },
-    ];
+    bodyType: CommunityType;
+    liked: boolean;
+    profileImg: string;
+    info: string;
     inbody: {
         createdAt: string;
-        gender: string;
+        gender: Gender;
+        bodyType: CommunityType;
+        height: number;
         weight: number;
-        muscleMass: number;
-        fatRatio: number;
-        muscleMassType: string;
-        fatMassType: string;
-        userCase: string;
-        armMuscleType: BodyLevel;
-        trunkMuscleType: BodyLevel;
-        legMuscleType: BodyLevel;
-    };
-    posts: [
-        {
-            postId: number;
-            userName: string;
-            date: string | null;
-            postType: string;
-            communityType: CommunityType;
-            content: string;
-            fileUrl: string;
-            fileType: string;
-        },
-    ];
+        muscle: number;
+        fat: number;
+        bmi: number;
+        userCase: CommunityType;
+        armGrade: BodyLevel;
+        bodyGrade: BodyLevel;
+        legGrade: BodyLevel;
+    }[];
+    posts: {
+        postId: number;
+        profileImg: string;
+        userName: string;
+        date: string;
+        postType: PostType;
+        communityType: CommunityType;
+        content: string;
+        fileUrl: string;
+        fileType: string;
+    }[];
 }
 
 const viewUserProfile = async (userId: number) => {
-    const response = await fetchInstance.get<ViewUserProfileReponseBody>(`/api/profile/${userId}`);
-    return response.data;
+    const response = await fetchInstance.get<ApiResponse<ViewUserProfileResponseBody>>(`/api/profile/${userId}`);
+    return response.data.value;
 };
 
 export const useViewUserProfile = (userId: number) => {
