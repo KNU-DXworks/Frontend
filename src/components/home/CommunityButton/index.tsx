@@ -28,7 +28,7 @@ const typeMapping: Record<CommunityType, { imgUrl: string; name: string }> = {
     standard: { imgUrl: standard, name: "표준형" },
     weightLoss: { imgUrl: weightLoss, name: "감량형" },
     muscle: { imgUrl: muscle, name: "근육형" },
-    overWeight: { imgUrl: overWeight, name: "과체중" },
+    overWeight: { imgUrl: overWeight, name: "과체중형" },
     obesity: { imgUrl: obesity, name: "비만형" },
     muscularObesity: { imgUrl: muscularObesity, name: "근육형 비만" },
 };

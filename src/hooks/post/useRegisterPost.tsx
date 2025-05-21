@@ -1,49 +1,68 @@
-// src/hooks/post/useRegisterPost.ts
 import { useState, useRef, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { fetchInstance } from "@/app/config/axios";
 
+type PostType = "NORMAL" | "SUBSCRIBE";
+type Community =
+    | "SKINNY"
+    | "SKINNY_MUSCLE"
+    | "STANDARD"
+    | "WEIGHT_LOSS"
+    | "MUSCLE"
+    | "OVERWEIGHT"
+    | "OBESITY"
+    | "MUSCULAR_OBESITY";
+
 interface RegisterPostRequestBody {
-    userId: number;
-    content: string;
-    postImg: string;
+    data: {
+        communityType: string;
+        postType: PostType;
+        content: string;
+    };
+    image: File;
 }
 
-interface UseRegisterPostProps {
-    communityId: string;
+interface RegisterPostProps {
+    community: Community;
 }
 
-const registerPost = async (isAll: boolean, communityId: string, data: RegisterPostRequestBody): Promise<void> => {
-    const url = isAll ? `/api/communities/${communityId}` : "/api/posts";
-    const response = await fetchInstance.post(url, data);
+const registerPost = async (data: RegisterPostRequestBody): Promise<void> => {
+    const formData = new FormData();
+
+    formData.append("data", new Blob([JSON.stringify(data.data)], { type: "application/json" }));
+
+    formData.append("image", data.image);
+
+    const response = await fetchInstance.post("/api/posts", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
     return response.data;
 };
 
-export const useRegisterPost = ({ communityId }: UseRegisterPostProps) => {
-    const [isAll, setIsAll] = useState<boolean>(true);
+export const useRegisterPost = ({ community }: RegisterPostProps) => {
+    const [isAll, setIsAll] = useState(true);
     const contentRef = useRef<HTMLTextAreaElement>(null);
     const [file, setFile] = useState<File | null>(null);
+
     const handleFileChange = useCallback((f: File | null) => setFile(f), []);
 
-    const uploadFile = useCallback(async (f: File): Promise<string> => {
-        const formData = new FormData();
-        formData.append("file", f);
-        const res = await fetchInstance.post("/api/upload", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        });
-        return res.data.url as string;
-    }, []);
-
-    // 게시물 등록
     const { mutate } = useMutation({
         mutationFn: async () => {
+            if (!file) throw new Error("파일이 선택되지 않았습니다.");
+
             const payload: RegisterPostRequestBody = {
-                userId: 1,
-                content: contentRef.current?.value ?? "",
-                postImg: "Afsd",
+                data: {
+                    communityType: community,
+                    postType: isAll ? "NORMAL" : "SUBSCRIBE",
+                    content: contentRef.current?.value || "",
+                },
+                image: file,
             };
-            console.log(payload);
-            return registerPost(isAll, communityId, payload);
+
+            return registerPost(payload);
         },
         onSuccess: () => {
             alert("게시물을 성공적으로 등록하였습니다!");
@@ -56,7 +75,6 @@ export const useRegisterPost = ({ communityId }: UseRegisterPostProps) => {
             alert("게시물 등록에 실패하였습니다.");
         },
     });
-
     const handleRegisterClick = useCallback(() => {
         mutate();
     }, [mutate]);

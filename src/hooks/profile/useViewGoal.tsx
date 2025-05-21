@@ -1,14 +1,20 @@
 import { fetchInstance } from "@/app/config/axios";
 import { useQuery } from "@tanstack/react-query";
 
+interface ApiResponse<T> {
+    code: number;
+    message: string;
+    value: T;
+}
+
 type BodyLevel = "BELOW_STANDARD" | "STANDARD" | "ABOVE_STANDARD";
-type GoalGroup =
+type BodyType =
     | "SKINNY"
     | "SKINNY_MUSCLE"
     | "STANDARD"
     | "WEIGHT_LOSS"
     | "MUSCLE"
-    | "WEIGHT"
+    | "OVERWEIGHT"
     | "OBESITY"
     | "MUSCULAR_OBESITY";
 
@@ -17,15 +23,15 @@ interface ViewGoalResponseBody {
     muscle: number;
     fat: number;
     bmi: number;
-    arm: BodyLevel | null;
-    body: BodyLevel | null;
-    leg: BodyLevel | null;
-    goalGroup: GoalGroup | null;
+    armGrade: BodyLevel | null;
+    bodyGrade: BodyLevel | null;
+    legGrade: BodyLevel | null;
+    bodyType: BodyType | null;
 }
 
 const viewGoal = async () => {
-    const response = await fetchInstance.get<ViewGoalResponseBody>("/api/goal");
-    return response.data;
+    const response = await fetchInstance.get<ApiResponse<ViewGoalResponseBody>>("/api/goal");
+    return response.data.value;
 };
 
 export const useViewGoal = () => {

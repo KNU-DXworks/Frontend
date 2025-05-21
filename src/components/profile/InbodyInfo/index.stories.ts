@@ -12,7 +12,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
     args: {
         type: "체지방량",
-        label: "표준",
+        label: "STANDARD",
         value: "23%",
     },
 };

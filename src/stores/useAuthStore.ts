@@ -7,6 +7,8 @@ interface AuthState {
     setAccessToken: (token: string) => void;
     refreshToken: string | null;
     setRefreshToken: (token: string) => void;
+    privateKey: string | null;
+    setPrivateKey: (key: string) => void;
     logout: () => void;
 }
 
@@ -16,12 +18,18 @@ export const useAuthStore = create(
             isLoggedIn: false,
             accessToken: null,
             refreshToken: null,
+            privateKey: null,
+
             setAccessToken: (token: string) => {
                 set({ isLoggedIn: true, accessToken: token });
             },
             setRefreshToken: (token: string) => {
                 set({ refreshToken: token });
             },
+            setPrivateKey: (key: string) => {
+                set({ privateKey: key });
+            },
+
             logout: () => {
                 set({ isLoggedIn: false, accessToken: null, refreshToken: null });
             },
@@ -32,6 +40,7 @@ export const useAuthStore = create(
                 isLoggedIn: state.isLoggedIn,
                 accessToken: state.accessToken,
                 refreshToken: state.refreshToken,
+                privateKey: state.privateKey,
             }),
         },
     ),

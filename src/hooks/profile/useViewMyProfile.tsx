@@ -8,7 +8,7 @@ interface ApiResponse<T> {
 }
 
 type BodyLevel = "BELOW_STANDARD" | "STANDARD" | "ABOVE_STANDARD";
-type CommunityType =
+type BodyType =
     | "SKINNY"
     | "SKINNY_MUSCLE"
     | "STANDARD"
@@ -16,53 +16,63 @@ type CommunityType =
     | "MUSCLE"
     | "OVERWEIGHT"
     | "OBESITY"
-    | "MUSCULAR_OBESITY";
+    | "MUSCULAR_OBESITY"
+    | "NONE";
+
 type Gender = "MALE" | "FEMALE";
 type PostType = "SUBSCRIBE" | "NORMAL";
 
 interface ViewUserProfileResponseBody {
     userId: number;
     userName: string;
-    bodyType: CommunityType;
-    liked: boolean;
+    bodyType: BodyType;
     profileImg: string;
+    eth: string;
     info: string;
+    walletRegistered: boolean;
+    goal: {
+        bodyType: BodyType;
+        weight: number;
+        muscle: number;
+        fat: number;
+    };
     inbody: {
         createdAt: string;
         gender: Gender;
-        bodyType: CommunityType;
+        bodyType: BodyType;
         height: number;
         weight: number;
         muscle: number;
         fat: number;
         bmi: number;
-        userCase: CommunityType;
         armGrade: BodyLevel;
         bodyGrade: BodyLevel;
+        userCase: BodyType;
         legGrade: BodyLevel;
     }[];
+
     posts: {
         postId: number;
         profileImg: string;
         userName: string;
         date: string;
         postType: PostType;
-        communityType: CommunityType;
+        communityType: BodyType;
         content: string;
         fileUrl: string;
         fileType: string;
     }[];
 }
 
-const viewUserProfile = async (userId: number) => {
-    const response = await fetchInstance.get<ApiResponse<ViewUserProfileResponseBody>>(`/api/profile/${userId}`);
+const viewMyProfile = async () => {
+    const response = await fetchInstance.get<ApiResponse<ViewUserProfileResponseBody>>("/api/profile/my");
     return response.data.value;
 };
 
-export const useViewUserProfile = (userId: number) => {
+export const useViewMyProfile = () => {
     const query = useQuery({
-        queryKey: ["profile", userId],
-        queryFn: () => viewUserProfile(userId),
+        queryKey: ["myProfile"],
+        queryFn: () => viewMyProfile(),
     });
 
     return { ...query };

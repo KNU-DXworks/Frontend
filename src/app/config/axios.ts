@@ -4,12 +4,11 @@ import type { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } fr
 import { BASE_URL } from "@/app/constants/URI";
 import { useAuthStore } from "@/stores/useAuthStore";
 
-
 const baseURL = BASE_URL;
 
 export const createInstance = (config: AxiosRequestConfig): AxiosInstance => {
     const instance = axios.create({
-        timeout: 30000,
+        timeout: 100000,
         ...config,
         baseURL,
         headers: {
