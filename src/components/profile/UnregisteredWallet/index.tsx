@@ -13,10 +13,11 @@ import {
 } from "@/components/ui/drawer";
 
 interface UnregisteredWalletProps {
+    inputRef?: React.RefObject<HTMLInputElement | null>;
     onClick?: () => void;
 }
 
-export const UnregisteredWallet = ({ onClick }: UnregisteredWalletProps) => {
+export const UnregisteredWallet = ({ onClick, inputRef }: UnregisteredWalletProps) => {
     return (
         <Drawer>
             <Box className="gap-4 flex-col">
@@ -38,7 +39,7 @@ export const UnregisteredWallet = ({ onClick }: UnregisteredWalletProps) => {
                         <DrawerDescription className="text-darkGray">등록할 지갑 주소를 입력하세요.</DrawerDescription>
                     </div>
 
-                    <Input placeholder="자신의 private key를 입력하세요"></Input>
+                    <Input ref={inputRef} placeholder="자신의 지갑 주소를 입력하세요"></Input>
                 </DrawerHeader>
                 <DrawerFooter>
                     <div className="flex flex-row gap-2">
