@@ -11,6 +11,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        coin: 6.9353,
+        coin: "6.9353",
     },
 };
