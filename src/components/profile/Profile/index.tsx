@@ -5,7 +5,6 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import userIcon from "@/assets/userIcon.svg";
 import { Button } from "@/components/common/Button";
-import { useNavigate } from "react-router-dom";
 import { forwardRef } from "react";
 
 interface ProfileProps {
@@ -18,6 +17,7 @@ interface ProfileProps {
     onLikeClick?: () => void;
     onChatClick?: () => void;
     onInfoClick?: () => void;
+    onInbodyClick?: () => void;
 }
 
 export const Profile = forwardRef<HTMLTextAreaElement, ProfileProps>(
@@ -32,15 +32,10 @@ export const Profile = forwardRef<HTMLTextAreaElement, ProfileProps>(
             onLikeClick,
             onChatClick,
             onInfoClick,
+            onInbodyClick,
         },
         ref,
     ) => {
-        const navigate = useNavigate();
-
-        const handleInbodyRegisterClick = () => {
-            navigate("/inbody/register");
-        };
-
         return (
             <div className="flex flex-col items-center relative min-h-[320px]">
                 <img src={profileImg} className="w-[80px] h-[80px] rounded-full" />
@@ -74,12 +69,7 @@ export const Profile = forwardRef<HTMLTextAreaElement, ProfileProps>(
                     ) : (
                         <div className="w-full flex gap-3 justify-center">
                             <Button size="s" type="primary" label="정보 수정하기" onClick={onInfoClick}></Button>
-                            <Button
-                                size="s"
-                                type="primary"
-                                label="인바디 등록하기"
-                                onClick={handleInbodyRegisterClick}
-                            ></Button>
+                            <Button size="s" type="primary" label="인바디 등록하기" onClick={onInbodyClick}></Button>
                         </div>
                     )}
                 </Box>

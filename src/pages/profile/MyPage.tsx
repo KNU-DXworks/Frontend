@@ -78,6 +78,13 @@ export const MyPage = () => {
                 info={data.info}
                 type="my"
                 onInfoClick={handleUpdateClick}
+                onInbodyClick={() => {
+                    if (privateKey) {
+                        navigate("/inbody/register");
+                    } else {
+                        alert("privateKey를 먼저 등록해주세요");
+                    }
+                }}
             />
 
             <div className="flex flex-row gap-4">
