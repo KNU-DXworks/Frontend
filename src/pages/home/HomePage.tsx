@@ -4,11 +4,14 @@ import { Box } from "@/components/common/Box";
 import { InfoCard } from "@/components/common/InfoCard";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { RecommendedUser } from "@/components/home/RecommendedUser";
-// import post1 from "@/assets/post/post1.svg";
 import profile from "@/assets/profile.svg";
 import { Post } from "@/components/common/Post";
 import { useNavigate } from "react-router-dom";
 import { useViewMain } from "@/hooks/home/useViewMain";
+import { Button } from "@/components/common/Button";
+import { useViewTransactionItem } from "@/hooks/transaction/useViewTransactionItem";
+import { TransactionItem } from "@/components/transaction/TransactionItem";
+import { formatShortDate } from "@/app/utils/date";
 
 enum BodyTypeEnum {
     SKINNY = "마른 체형",
@@ -20,11 +23,12 @@ enum BodyTypeEnum {
     OVERWEIGHT = "과제충형",
     OBESITY = "비만형",
     MUSCULAR_OBESITY = "근육 비만형",
-    NONE = "미지정",
+    NONE = "-",
 }
 
 export const HomePage = () => {
     const { data } = useViewMain();
+    const { data: transactions } = useViewTransactionItem();
 
     const navigate = useNavigate();
 
@@ -82,6 +86,22 @@ export const HomePage = () => {
             </div>
 
             <div>
+                <SectionHeader label="추천 사용자"></SectionHeader>
+                <Box className="flex flex-col gap-2">
+                    {data?.recommandUser?.map((user) => (
+                        <RecommendedUser
+                            key={user.userId}
+                            name={user.userName}
+                            imgUrl={user.profileImg}
+                            prev={user.prevType}
+                            label={BodyTypeEnum[user.bodyType]}
+                            onClick={() => handleUserProfileClick(user.userId)}
+                        ></RecommendedUser>
+                    ))}
+                </Box>
+            </div>
+
+            <div>
                 <SectionHeader label="구독한 사용자"></SectionHeader>
                 <Box className="flex flex-col gap-2">
                     {data?.subscribeUser?.map((user) => (
@@ -98,17 +118,28 @@ export const HomePage = () => {
             </div>
 
             <div>
-                <SectionHeader label="추천 사용자"></SectionHeader>
-                <Box className="flex flex-col gap-2">
-                    {data?.recommandUser?.map((user) => (
-                        <RecommendedUser
-                            key={user.userId}
-                            name={user.userName}
-                            imgUrl={user.profileImg}
-                            prev={user.prevType}
-                            label={BodyTypeEnum[user.bodyType]}
-                            onClick={() => handleUserProfileClick(user.userId)}
-                        ></RecommendedUser>
+                <div className="flex flex-row justify-between">
+                    <SectionHeader
+                        type="tertiary"
+                        label="거래 구독 관리"
+                        onClick={() => navigate("/transaction")}
+                    ></SectionHeader>
+                    <Button size="xs" label="거래 추가" onClick={() => navigate("/transaction/register")}></Button>
+                </div>
+                <Box className="flex flex-col gap-2" onClick={() => navigate("/transaction")}>
+                    {transactions?.following.map((item) => (
+                        <TransactionItem
+                            key={item.transactionId}
+                            userName={item.name}
+                            profileImg={item.profileImg}
+                            walletAddress={item.walletAddress}
+                            amount={item.amount}
+                            isTransfered={item.isTransfered}
+                            contractDate={formatShortDate(item.contractDate)}
+                            expiredDate={formatShortDate(item.expirationDate)}
+                            isIncome={false}
+                            label={item.isTransfered === true ? "송금 완료" : "송금 대기"}
+                        />
                     ))}
                 </Box>
             </div>
