@@ -24,23 +24,23 @@ export const TransactionRegisterPage = () => {
             </div> */}
 
             <div className="flex flex-col gap-4">
-                <text className="font-bold">거래자 아이디</text>
-                <Input ref={traderIdRef} placeholder="거래하기로 한 사용자의 id를 입력해주세요"></Input>
+                <text className="font-bold">거래자 지갑주소</text>
+                <Input ref={traderIdRef} placeholder="거래하기로 한 사용자의 지갑주소를 입력해주세요"></Input>
             </div>
 
             <div className="flex flex-col gap-4">
                 <text className="font-bold">거래 주기</text>
-                <Input ref={transactionPeriodRef} placeholder="일 단위로 입력해주세요."></Input>
+                <Input ref={transactionPeriodRef} placeholder="일 단위로 입력해주세요." unit="일"></Input>
             </div>
 
             <div className="flex flex-col gap-4">
                 <text className="font-bold">거래 가격</text>
-                <Input ref={amountRef}></Input>
+                <Input ref={amountRef} placeholder="거래하기로 한 가격을 입력해주세요." unit="원"></Input>
             </div>
 
             <div className="flex flex-col gap-4">
                 <text className="font-bold">거래 설명</text>
-                <TextArea ref={infoRef}></TextArea>
+                <TextArea ref={infoRef} placeholder="거래 내용에 대한 추가 설명을 입력해주세요."></TextArea>
             </div>
 
             <Button label="거래 등록하기"></Button>
