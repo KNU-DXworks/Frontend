@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { fetchInstance } from "@/app/config/axios";
+import { useNavigate } from "react-router-dom";
 
 type PostType = "NORMAL" | "SUBSCRIBE";
 type Community =
@@ -46,6 +47,7 @@ export const useRegisterPost = ({ community }: RegisterPostProps) => {
     const [isAll, setIsAll] = useState(true);
     const contentRef = useRef<HTMLTextAreaElement>(null);
     const [file, setFile] = useState<File | null>(null);
+    const navigate = useNavigate();
 
     const handleFileChange = useCallback((f: File | null) => setFile(f), []);
 
@@ -69,6 +71,7 @@ export const useRegisterPost = ({ community }: RegisterPostProps) => {
             setIsAll(true);
             if (contentRef.current) contentRef.current.value = "";
             setFile(null);
+            navigate(-1);
         },
         onError: (err) => {
             console.error("등록 실패:", err);
