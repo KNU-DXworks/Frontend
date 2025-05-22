@@ -21,6 +21,7 @@ export const useTransfer = () => {
 
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["transaction"] });
+            queryClient.invalidateQueries({ queryKey: ["myProfile"] });
             alert("성공적으로 송금되었습니다!");
         },
         onError: (error) => {

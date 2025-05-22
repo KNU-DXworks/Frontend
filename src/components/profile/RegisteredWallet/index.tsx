@@ -2,7 +2,7 @@ import { Box } from "@/components/common/Box";
 import ethereumIcon from "@/assets/ethereumIcon.svg";
 
 interface RegisteredWalletProps {
-    coin: string;
+    coin?: string;
 }
 
 export const RegisteredWallet = ({ coin }: RegisteredWalletProps) => {
