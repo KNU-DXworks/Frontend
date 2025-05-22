@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { fetchInstance } from "@/app/config/axios";
 import { useNavigate } from "react-router-dom";
+import { queryClient } from "@/app/config/query";
 
 type PostType = "NORMAL" | "SUBSCRIBE";
 type Community =
@@ -71,6 +72,8 @@ export const useRegisterPost = ({ community }: RegisterPostProps) => {
             setIsAll(true);
             if (contentRef.current) contentRef.current.value = "";
             setFile(null);
+            queryClient.invalidateQueries({ queryKey: ["posts", community] });
+
             navigate(-1);
         },
         onError: (err) => {

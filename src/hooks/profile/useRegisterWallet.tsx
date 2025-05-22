@@ -27,6 +27,8 @@ export const useRegisterWallet = () => {
 
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["wallet"] });
+            queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+
             alert("성공적으로 저장되었습니다!");
         },
         onError: (error) => {

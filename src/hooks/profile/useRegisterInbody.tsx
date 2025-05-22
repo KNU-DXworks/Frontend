@@ -79,6 +79,8 @@ export const useRegisterInbody = () => {
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["inbody"] });
+            queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+
             setLatestInbody(data);
         },
         onError: (error) => {
