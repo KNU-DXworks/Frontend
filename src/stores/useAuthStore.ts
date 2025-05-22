@@ -31,7 +31,7 @@ export const useAuthStore = create(
             },
 
             logout: () => {
-                set({ isLoggedIn: false, accessToken: null, refreshToken: null });
+                set({ isLoggedIn: false, accessToken: null, refreshToken: null, privateKey: null, });
             },
         }),
         {

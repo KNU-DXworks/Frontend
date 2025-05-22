@@ -12,6 +12,7 @@ import { PostRegisterPage } from "./pages/post/PostRegisterPage";
 import { InbodyRegisterPage } from "./pages/profile/InbodyRegisterPage";
 import { ProtectedRoute } from "./app/layout/ProtectedRoute";
 import { RedirectPage } from "./pages/auth/RedirectPage";
+import { TransactionViewPage } from "./pages/transaction/TransactionViewPage";
 
 export const Router = () => {
     return (
@@ -30,6 +31,7 @@ export const Router = () => {
 
                     <Route path="goal/register" element={<GoalRegisterPage />} />
 
+                    <Route path="transaction" element={<TransactionViewPage />} />
                     <Route path="transaction/register" element={<TransactionRegisterPage />} />
 
                     <Route path="chat/:id" element={<ChatPage />} />

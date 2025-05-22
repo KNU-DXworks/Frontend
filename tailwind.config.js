@@ -66,6 +66,7 @@ export default {
                 purple: "#7878FF",
                 skyBlue: "#e6f5ff",
                 blue: "#28AEFF",
+                darkBlue: "#0040FF",
             },
         },
         colors: {
@@ -84,6 +85,7 @@ export default {
             purple: "#7878FF",
             skyBlue: "#e6f5ff",
             blue: "#28AEFF",
+            darkBlue: "#0040FF",
         },
     },
     plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar"), require("tailwind-scrollbar-hide")],
