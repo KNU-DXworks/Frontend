@@ -4,6 +4,7 @@ import { Title } from "@/components/common/Title";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useViewCommunity } from "@/hooks/community/useViewCommunity";
+import { useViewMyProfile } from "@/hooks/profile/useViewMyProfile";
 
 export const CommunityPage = () => {
     const communityTypes = {
@@ -15,20 +16,31 @@ export const CommunityPage = () => {
         OVERWEIGHT: "과체중형",
         OBESITY: "비만형",
         MUSCULAR_OBESITY: "근육 비만형",
-        NONE: "미지정",
+        NONE: "-",
     };
 
     const navigate = useNavigate();
     const { type } = useParams<{ type: keyof typeof communityTypes }>();
     const community = type ? communityTypes[type] : "NONE";
     const { data } = useViewCommunity(type as keyof typeof communityTypes);
+    const { data: user } = useViewMyProfile();
 
     const handleUserProfileClick = (id: number) => {
         navigate(`/profile/${id}`);
     };
 
+    const hasMatchingBodyType = user?.inbody?.some((entry) => entry.bodyType === type);
+
     const handleGoToRegister = () => {
-        navigate(`/post/register?communityType=${type}`);
+        if (user?.bodyType === type) navigate(`/post/register?communityType=${type}`);
+        else {
+            if (user?.bodyType === "NONE") {
+                alert("인바디를 등록해야 글을 작성할 수 있습니다. 인바디를 먼저 등록해주세요.");
+                navigate("/profile/my");
+            } else if (!hasMatchingBodyType) {
+                alert(`과거 체형이 ${community}이어야만 해당 커뮤니티에 글을 작성할 수 있습니다.`);
+            }
+        }
     };
 
     return (
