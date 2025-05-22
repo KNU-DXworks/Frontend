@@ -32,7 +32,7 @@ export const createInstance = (config: AxiosRequestConfig): AxiosInstance => {
     instance.interceptors.response.use(
         (response) => response,
         (error) => {
-            if (error.response?.status === 401) {
+            if (error.response?.status === 403) {
                 const { logout } = useAuthStore.getState();
 
                 if (typeof window !== "undefined") {
