@@ -13,7 +13,7 @@ export const Default: Story = {
     args: {
         userName: "조민주",
         walletAddress: "0x4635181351654131321843131",
-        amount: "0.54861",
+        amount: 0.54861,
         transactionPeriod: 60,
         expiredDate: "2025.04.12",
         contractDate: "2025.04.12",
