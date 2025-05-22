@@ -3,11 +3,13 @@ import { Header } from "@/components/common/Header";
 import { Title } from "@/components/common/Title";
 import { TransactionItem } from "@/components/transaction/TransactionItem";
 import { formatShortDate } from "@/app/utils/date";
+import { useTransfer } from "@/hooks/transaction/useTransfer";
 // import { useViewTransactionItem } from "@/hooks/transaction/useViewTransactionItem";
 
 export const TransactionViewPage = () => {
     const [isFollower, setIsFollower] = useState(true);
     // const { data: d } = useViewTransactionItem();
+    const { handleTransferClick } = useTransfer();
 
     const data = {
         following: [
@@ -19,7 +21,7 @@ export const TransactionViewPage = () => {
                     "http://img1.kakaocdn.net/thumb/R110x110.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
                 walletAddress: "0xabc123456789abcdef",
                 transactionPeriod: 30,
-                amount: "0.51354",
+                amount: 0.51354,
                 isTransfered: false,
                 contractDate: "2024-05-01T00:00:00",
                 expirationDate: "2024-05-31T00:00:00",
@@ -28,10 +30,10 @@ export const TransactionViewPage = () => {
                 transactionId: 2,
                 userId: 4,
                 name: "김현우",
-                profileImg: "https://via.placeholder.com/150",
+                profileImg: undefined,
                 walletAddress: "0xdef456789abcdef123",
                 transactionPeriod: 15,
-                amount: "0.51354",
+                amount: 0.51354,
                 isTransfered: true,
                 contractDate: "2024-05-05T00:00:00",
                 expirationDate: "2024-05-20T00:00:00",
@@ -45,7 +47,7 @@ export const TransactionViewPage = () => {
                 profileImg: "https://via.placeholder.com/150",
                 walletAddress: "0xghi789abcdef123456",
                 transactionPeriod: 10,
-                amount: "0.51354",
+                amount: 0.51354,
                 isTransfered: false,
                 contractDate: "2024-05-10T00:00:00",
                 expirationDate: "2024-05-20T00:00:00",
@@ -57,7 +59,7 @@ export const TransactionViewPage = () => {
                 profileImg: "https://via.placeholder.com/150",
                 walletAddress: "0xjkl0123456789abcdef",
                 transactionPeriod: 7,
-                amount: "0.51354",
+                amount: 0.51354,
                 isTransfered: true,
                 contractDate: "2024-05-12T00:00:00",
                 expirationDate: "2024-05-19T00:00:00",
@@ -92,7 +94,7 @@ export const TransactionViewPage = () => {
             </div>
 
             {isFollower && (
-                <>
+                <div className="flex flex-col gap-2">
                     {data.follower.map((item) => (
                         <TransactionItem
                             key={item.transactionId}
@@ -107,11 +109,11 @@ export const TransactionViewPage = () => {
                             label={!item.isTransfered === true ? "입금 완료" : "입금 대기"}
                         />
                     ))}
-                </>
+                </div>
             )}
 
             {!isFollower && (
-                <>
+                <div className="flex flex-col gap-2">
                     {data.following.map((item) => (
                         <TransactionItem
                             key={item.transactionId}
@@ -124,9 +126,16 @@ export const TransactionViewPage = () => {
                             expiredDate={formatShortDate(item.expirationDate)}
                             isIncome={false}
                             label={item.isTransfered === true ? "송금 완료" : "송금 대기"}
+                            onClick={() => {
+                                if (!item.isTransfered) {
+                                    handleTransferClick({ walletAddress: item.walletAddress });
+                                } else {
+                                    alert("이미 송금이 완료되었습니다.");
+                                }
+                            }}
                         />
                     ))}
-                </>
+                </div>
             )}
         </div>
     );

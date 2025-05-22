@@ -6,7 +6,7 @@ interface TransactionItemProps {
     userName: string;
     profileImg?: string;
     walletAddress: string;
-    amount: string;
+    amount: number;
     transactionPeriod?: number;
     expiredDate: string;
     contractDate: string;

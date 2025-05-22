@@ -27,6 +27,7 @@ interface ViewUserProfileResponseBody {
     userName: string;
     bodyType: BodyType;
     profileImg: string;
+    telegram: string;
     eth: string;
     info: string;
     walletRegistered: boolean;

@@ -25,6 +25,7 @@ interface ViewUserProfileResponseBody {
     userName: string;
     bodyType: CommunityType;
     liked: boolean;
+    telegram: string;
     profileImg: string;
     info: string;
     inbody: {
