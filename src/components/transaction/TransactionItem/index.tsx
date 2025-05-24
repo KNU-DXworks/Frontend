@@ -44,21 +44,21 @@ export const TransactionItem = ({
                         </div>
                         <div className="flex flex-row gap-2">
                             <div className="flex flex-row gap-1.5">
-                                <span className="font-bold text-darkGray text-[10px]">체결일 </span>
-                                <span className="text-darkGray text-[10px]">{contractDate}</span>
+                                <span className="font-bold text-darkGray text-[8px]">체결일 </span>
+                                <span className="text-darkGray text-[8px]">{contractDate}</span>
                             </div>
-                            <span className="text-darkGray text-[10px]">l</span>
+                            <span className="text-darkGray text-[8px]">l</span>
                             <div className="flex flex-row gap-1.5">
-                                <span className="font-bold text-darkGray text-[10px]">만료일 </span>
-                                <span className="text-darkGray text-[10px]">{expiredDate}</span>
+                                <span className="font-bold text-darkGray text-[8px]">만료일 </span>
+                                <span className="text-darkGray text-[8px]">{expiredDate}</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col items-end gap-2">
                     <Chip size="s" label={label} isSelected={!isTransfered} onClick={onClick}></Chip>
-                    {isIncome === true && <span className="text-darkBlue font-bold">+{amount} ETH</span>}
-                    {isIncome === false && <span className="text-red font-bold">-{amount} ETH</span>}
+                    {isIncome === true && <span className="text-darkBlue font-bold text-sm">+{amount} ETH</span>}
+                    {isIncome === false && <span className="text-red font-bold text-sm">-{amount} ETH</span>}
                 </div>
             </div>
         </Box>
