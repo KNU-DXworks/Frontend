@@ -1,11 +1,17 @@
-import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { Navigate, Outlet } from "react-router-dom";
 
 export const ProtectedRoute = () => {
-    const { isLoggedIn } = useAuthStore();
+    const { isLoggedIn, walletRegistered } = useAuthStore();
 
     if (!isLoggedIn) {
-        return <Navigate to="/login" replace />;
+        // 비로그인 → 로그인 페이지로
+        return <Navigate to="/start" replace />;
+    } else if (!walletRegistered) {
+        // 로그인했지만 지갑 미등록 → 지갑 등록 페이지로
+        return <Navigate to="/wallet/register" replace />;
     }
-    return <Outlet />;
+
+    // 로그인 & 지갑 등록 완료 → 보호된 자식 라우트 렌더
+    else return <Outlet />;
 };
