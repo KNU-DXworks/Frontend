@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { RecommendedUser } from "@/components/home/RecommendedUser";
+import { SubscribeUser } from "@/components/home/SubscribeUser";
 
 const meta = {
-    title: "components/Home/RecommendedUser",
-    component: RecommendedUser,
-} satisfies Meta<typeof RecommendedUser>;
+    title: "components/Home/SubscribeUser",
+    component: SubscribeUser,
+} satisfies Meta<typeof SubscribeUser>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
