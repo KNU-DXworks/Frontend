@@ -32,13 +32,13 @@ interface ViewMainResponseBody {
         prevType: BodyType;
         bodyType: BodyType;
     }[];
-
-    recommandUser: {
+    recommendUser: {
         userId: number;
         userName: string;
         profileImg: string;
-        prevType: BodyType;
         bodyType: BodyType;
+        recommendReason: string;
+        telegramUrl: string;
     }[];
     subscribePosts: {
         postId: number;
