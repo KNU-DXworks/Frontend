@@ -1,7 +1,7 @@
 import { Badge } from "@/components/common/Badge";
 import userIcon from "@/assets/userIcon.svg";
 
-interface RecommendedUserProps {
+interface SubscribeUserProps {
     imgUrl?: string;
     name: string;
     prev: string;
@@ -9,7 +9,7 @@ interface RecommendedUserProps {
     onClick?: () => void;
 }
 
-export const RecommendedUser = ({ imgUrl = userIcon, name, prev, label, onClick }: RecommendedUserProps) => {
+export const SubscribeUser = ({ imgUrl = userIcon, name, prev, label, onClick }: SubscribeUserProps) => {
     return (
         <div className="flex gap-4 rounded-xl p-2 cursor-pointer" onClick={onClick}>
             <img src={imgUrl} className="w-[50px] h-[50px] rounded-full object-cover"></img>
