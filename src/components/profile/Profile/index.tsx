@@ -37,7 +37,7 @@ export const Profile = forwardRef<HTMLTextAreaElement, ProfileProps>(
         ref,
     ) => {
         return (
-            <div className="flex flex-col items-center relative min-h-[320px]">
+            <div className="flex flex-col items-center relative min-h-[320px] gap-2">
                 <img src={profileImg} className="w-[80px] h-[80px] rounded-full" />
                 <Box className="items-center flex-col gap-2 absolute top-10 pt-10">
                     <div className="flex items-center gap-3">
