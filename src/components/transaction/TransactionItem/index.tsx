@@ -30,7 +30,7 @@ export const TransactionItem = ({
 }: TransactionItemProps) => {
     const shortenWalletAddress = (address: string) => {
         if (address.length <= 8) return address;
-        return `${address.slice(0, 5)}...${address.slice(-3)}`;
+        return `${address.slice(0, 4)}..${address.slice(-3)}`;
     };
     return (
         <Box className="flex-col">

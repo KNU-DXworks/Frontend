@@ -2,6 +2,7 @@ import { fetchInstance } from "@/app/config/axios";
 import { queryClient } from "@/app/config/query";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type BodyLevel = "BELOW_STANDARD" | "STANDARD" | "ABOVE_STANDARD";
 type BodyType =
@@ -41,7 +42,9 @@ export const useRegisterGoal = () => {
     const [legGrade, setLegGrade] = useState<BodyLevel | null>(null);
     const [bodyType, setBodyType] = useState<BodyType | null>(null);
 
-    const { mutate } = useMutation({
+    const navigate = useNavigate();
+
+    const { mutate, isPending } = useMutation({
         mutationFn: () => {
             const payload = {
                 weight: Number(weightRef.current?.value),
@@ -62,6 +65,7 @@ export const useRegisterGoal = () => {
             queryClient.invalidateQueries({ queryKey: ["goal"] });
             queryClient.invalidateQueries({ queryKey: ["myProfile"] });
             alert("성공적으로 저장되었습니다!");
+            navigate("/");
         },
         onError: (error) => {
             console.error("Error response:", error.message);
@@ -87,5 +91,6 @@ export const useRegisterGoal = () => {
         bodyType,
         setBodyType,
         handleRegisterClick,
+        isPending,
     };
 };

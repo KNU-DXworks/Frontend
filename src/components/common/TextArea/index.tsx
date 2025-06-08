@@ -16,7 +16,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
                 placeholder={placeholder}
                 readOnly={readOnly}
                 className={clsx(
-                    "rounded-xl w-full p-4 outline-none overflow-y-scroll resize-none scrollbar-hide",
+                    "rounded-xl text-sm w-full p-4 outline-none overflow-y-scroll resize-none scrollbar-hide",
                     type === "primary" ? "border border-lightGray h-[120px]" : "border-none h-[70px]",
                     className,
                 )}

@@ -4,6 +4,7 @@ import { Title } from "@/components/common/Title";
 import copy from "@/assets/copy.svg";
 import { useNavigate } from "react-router-dom";
 import { useGetWallet } from "@/hooks/wallet/useGetWallet";
+import warning from "@/assets/warning.svg";
 
 export const WalletIssuePage = () => {
     const navigate = useNavigate();
@@ -21,12 +22,14 @@ export const WalletIssuePage = () => {
     }
 
     const handleCopyPrivateKey = async () => {
+        console.log("복사 클릭");
         if (data?.privateKey) {
             try {
                 await navigator.clipboard.writeText(data.privateKey);
                 alert("개인 키가 복사되었습니다.");
             } catch (e) {
-                alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
+                console.log(e);
+                alert("복사에 실패했습니다.");
             }
         }
     };
@@ -38,9 +41,11 @@ export const WalletIssuePage = () => {
 
             <div className="flex flex-col gap-4">
                 <span className="font-bold">지갑 주소</span>
-                <div id="input-field" className="rounded-xl border border-lightGray h-[55px] p-4">
-                    {/* {data?.walletAddress} */}
-                    dfsdfnsdklfs;dfsdg
+                <div
+                    id="input-field"
+                    className="rounded-xl border border-lightGray min-h-[80px] p-4 break-words whitespace-pre-wrap overflow-visible"
+                >
+                    {data?.address}
                 </div>
             </div>
 
@@ -51,12 +56,15 @@ export const WalletIssuePage = () => {
                         <img src={copy} className="w-6 h-6" />
                     </Button>
                 </div>
-                <div id="input-field" className="rounded-xl border border-lightGray h-[55px] p-4">
-                    {/* {data?.privateKey} */}
-                    dgsdjfngsodigndg
+                <div
+                    id="input-field"
+                    className="rounded-xl border border-lightGray min-h-[80px] p-4 break-words whitespace-pre-wrap overflow-visible"
+                >
+                    {data?.privateKey}
                 </div>
 
                 <div className="flex flex-col gap-1">
+                    <img src={warning} className="self-center w-[40px] h-[40px] mb-2"></img>
                     <span className="text-darkGray text-xs">
                         * 이 개인 키는 다시 확인할 수 없으니 꼭 안전한 곳에 저장해주세요.
                     </span>

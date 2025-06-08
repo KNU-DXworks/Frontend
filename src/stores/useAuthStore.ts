@@ -4,12 +4,17 @@ import { persist } from "zustand/middleware";
 interface AuthState {
     isLoggedIn: boolean;
     accessToken: string | null;
-    setAccessToken: (token: string) => void;
     refreshToken: string | null;
-    setRefreshToken: (token: string) => void;
     privateKey: string | null;
+    walletRegistered: boolean;
+    walletAddress: string | null;
+    setAccessToken: (token: string) => void;
+    setRefreshToken: (token: string) => void;
     setPrivateKey: (key: string) => void;
+    login: () => void;
     logout: () => void;
+    setWalletRegistered: (flag: boolean) => void;
+    setWalletAddress: (adress: string) => void;
 }
 
 export const useAuthStore = create(
@@ -19,6 +24,8 @@ export const useAuthStore = create(
             accessToken: null,
             refreshToken: null,
             privateKey: null,
+            walletRegistered: false,
+            walletAddress: null,
 
             setAccessToken: (token: string) => {
                 set({ isLoggedIn: true, accessToken: token });
@@ -29,9 +36,17 @@ export const useAuthStore = create(
             setPrivateKey: (key: string) => {
                 set({ privateKey: key });
             },
-
+            login: () => {
+                set({ isLoggedIn: true });
+            },
             logout: () => {
-                set({ isLoggedIn: false, accessToken: null, refreshToken: null, privateKey: null, });
+                set({ isLoggedIn: false, accessToken: null, refreshToken: null, privateKey: null });
+            },
+            setWalletRegistered: (flag: boolean) => {
+                set({ walletRegistered: flag });
+            },
+            setWalletAddress: (address: string) => {
+                set({ walletAddress: address });
             },
         }),
         {
@@ -41,6 +56,7 @@ export const useAuthStore = create(
                 accessToken: state.accessToken,
                 refreshToken: state.refreshToken,
                 privateKey: state.privateKey,
+                walletRegistered: state.walletRegistered,
             }),
         },
     ),

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { RootLayout } from "./app/layout/RootLayout";
-import { LoginPage } from "./pages/auth/LoginPage";
+// import { LoginPage } from "./pages/auth/LoginPage";
 import { HomePage } from "./pages/home/HomePage";
 import { CommunityPage } from "./pages/community/CommunityPage";
 import { UserPage } from "./pages/profile/UserPage";
@@ -11,15 +11,22 @@ import { ChatPage } from "./pages/chat/ChatPage";
 import { PostRegisterPage } from "./pages/post/PostRegisterPage";
 import { InbodyRegisterPage } from "./pages/profile/InbodyRegisterPage";
 import { ProtectedRoute } from "./app/layout/ProtectedRoute";
-import { RedirectPage } from "./pages/auth/RedirectPage";
+// import { RedirectPage } from "./pages/auth/RedirectPage";
 import { TransactionViewPage } from "./pages/transaction/TransactionViewPage";
+import { WalletRegisterPage } from "./pages/wallet/WalletRegisterPage";
+import { WalletIssuePage } from "./pages/wallet/WalletIssuePage";
+import { StartPage } from "./pages/auth/StartPage";
 
 export const Router = () => {
     return (
         <Routes>
             <Route path="/" element={<RootLayout />}>
-                <Route path="login" element={<LoginPage />} />
-                <Route path="redirection" element={<RedirectPage></RedirectPage>}></Route>
+                {/* <Route path="login" element={<LoginPage />} /> */}
+                <Route path="start" element={<StartPage />} />
+                {/* <Route path="redirection" element={<RedirectPage></RedirectPage>}></Route> */}
+
+                <Route path="wallet/register" element={<WalletRegisterPage />} />
+                <Route path="wallet/issue" element={<WalletIssuePage />} />
 
                 <Route element={<ProtectedRoute />}>
                     <Route index element={<HomePage />} />

@@ -4,7 +4,6 @@ import { Header } from "@/components/common/Header";
 import { Input } from "@/components/common/Input";
 import { Title } from "@/components/common/Title";
 import { useRegisterGoal } from "@/hooks/profile/useRegisterGoal";
-import { useNavigate } from "react-router-dom";
 import { gradeOptions } from "@/app/constants/gradeOptions";
 import { bodyTypeOptions } from "@/app/constants/bodyTypeOptions";
 import { useEffect } from "react";
@@ -36,10 +35,10 @@ export const GoalRegisterPage = () => {
         bodyType,
         setBodyType,
         handleRegisterClick,
+        isPending,
     } = useRegisterGoal();
 
     const { data } = useViewGoal();
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (!data) return;
@@ -58,11 +57,6 @@ export const GoalRegisterPage = () => {
     }, [data]);
 
     console.log(data);
-
-    const handleGoalRegister = () => {
-        handleRegisterClick();
-        navigate("/profile/my");
-    };
 
     return (
         <div className="flex flex-col gap-8">
@@ -117,7 +111,7 @@ export const GoalRegisterPage = () => {
                 </div>
             </div>
 
-            <Button onClick={handleGoalRegister} label="목표치 등록하기" />
+            <Button onClick={handleRegisterClick} label={isPending ? "저장 중입니다..." : "목표치 등록하기"} />
         </div>
     );
 };

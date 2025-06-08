@@ -22,8 +22,6 @@ import { useUpdateInfo } from "@/hooks/profile/useUpdateInfo";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { UnregisteredPrivateKey } from "@/components/profile/UnregisteredPrivateKey";
 import * as Dialog from "@radix-ui/react-dialog";
-import { UnregisteredTelegram } from "@/components/profile/UnregisteredTelegram";
-import { useRegisterTelegram } from "@/hooks/profile/useRegisterTelegram";
 
 export const MyPage = () => {
     const navigate = useNavigate();
@@ -32,7 +30,6 @@ export const MyPage = () => {
     const { privateKey, setPrivateKey } = useAuthStore();
     const { data, isLoading, isError } = useViewMyProfile();
     const { walletRef, handleRegisterClick } = useRegisterWallet();
-    const { telegramRef, handleRegisterTelegramClick } = useRegisterTelegram();
 
     if (isLoading) return <div>Loading...</div>;
     if (isError || !data) return <div>사용자 정보를 불러올 수 없습니다.</div>;
@@ -41,16 +38,15 @@ export const MyPage = () => {
     const posts = data.posts ?? [];
     const latestInbody = inbody.length > 0 ? inbody[inbody.length - 1] : null;
 
+    // 변형된 inbodyHistory
     const inbodyHistory =
-        inbody.length === 0
-            ? []
-            : inbody.length === 1
-              ? [{ date: inbody[0].createdAt, curInbody: inbody[0] }]
-              : inbody.slice(0, -1).map((item, idx) => ({
-                    date: inbody[idx + 1].createdAt,
-                    prevInbody: item,
-                    curInbody: inbody[idx + 1],
-                }));
+        inbody.length > 1
+            ? inbody.slice(1).map((cur, idx) => ({
+                  date: cur.createdAt,
+                  prevInbody: inbody[idx],
+                  curInbody: cur,
+              }))
+            : [];
 
     const handleGoal = () => navigate("/goal/register");
 
@@ -111,7 +107,10 @@ export const MyPage = () => {
             {tab === "post" && (
                 <div className="flex flex-col gap-2">
                     {posts.length === 0 ? (
-                        <div>사용자가 등록한 게시물이 없습니다.</div>
+                        <div className="flex flex-col">
+                            <span>아직 등록된 게시물이 없어요.</span>
+                            <span>게시글은 각 커뮤니티에 들어가서 작성하실 수 있어요.</span>
+                        </div>
                     ) : (
                         posts.map((post) => (
                             <Post
@@ -134,118 +133,116 @@ export const MyPage = () => {
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-2 w-full">
                         <span className="font-bold text-darkGray">체형 변화</span>
-                        {inbodyHistory.length === 0 ? (
-                            <div>사용자가 등록한 인바디 정보가 없습니다.</div>
-                        ) : (
-                            inbodyHistory.map((item, idx) => {
-                                const isSingle = inbodyHistory.length === 1;
-                                if (isSingle) {
-                                    return (
-                                        <History key={idx} date={item.date} cur={bodyTypes[item.curInbody.userCase]} />
-                                    );
-                                }
-                                return (
-                                    <Dialog.Root key={idx}>
-                                        <Dialog.Trigger className="text-left">
-                                            <History
-                                                date={item.date}
-                                                prev={
-                                                    "prevInbody" in item
-                                                        ? bodyTypes[item.prevInbody.userCase]
-                                                        : undefined
-                                                }
-                                                cur={bodyTypes[item.curInbody.userCase]}
-                                            />
-                                        </Dialog.Trigger>
-                                        <Dialog.Portal>
-                                            <Dialog.Overlay className="fixed inset-0 bg-black/50 z-40" />
-                                            <Dialog.Content className="fixed top-1/2 left-1/2 z-50 w-[90vw] max-w-md max-h-[90vh] transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl focus:outline-none p-6 overflow-hidden">
-                                                <div className="overflow-y-auto max-h-[80vh] flex flex-col gap-6">
-                                                    {"prevInbody" in item && (
-                                                        <div>
+
+                        {inbody.length === 0 && <div>사용자가 등록한 인바디 정보가 없습니다.</div>}
+
+                        {inbody.length === 1 && (
+                            <div>
+                                <History
+                                    date={inbody[0].createdAt}
+                                    cur={bodyTypes[inbody[0].userCase]}
+                                    // description={`${bodyTypes[inbody[0].userCase]}형이 되었어요`}
+                                />
+                            </div>
+                        )}
+
+                        {inbody.length > 1 &&
+                            inbodyHistory.map((item, idx) => (
+                                <Dialog.Root key={idx}>
+                                    <Dialog.Trigger className="text-left">
+                                        <History
+                                            date={item.date}
+                                            prev={bodyTypes[item.prevInbody.userCase]}
+                                            cur={bodyTypes[item.curInbody.userCase]}
+                                        />
+                                    </Dialog.Trigger>
+                                    <Dialog.Portal>
+                                        <Dialog.Overlay className="fixed inset-0 bg-black/50 z-40" />
+                                        <Dialog.Content className="fixed top-1/2 left-1/2 z-50 w-[90vw] max-w-md max-h-[90vh] transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl focus:outline-none p-6 overflow-hidden">
+                                            <div className="overflow-y-auto max-h-[80vh] flex flex-col gap-6">
+                                                {item.prevInbody && (
+                                                    <div>
+                                                        <div className="flex flex-row gap-2">
                                                             <span className="font-bold text-darkGray">
                                                                 이전 인바디 수치
                                                             </span>
-                                                            <Box className="flex-col">
-                                                                <InbodyInfo
-                                                                    type="키"
-                                                                    value={`${item.prevInbody.height}cm`}
-                                                                />
-                                                                <InbodyInfo
-                                                                    type="체중"
-                                                                    value={`${item.prevInbody.weight}kg`}
-                                                                />
-                                                                <InbodyInfo
-                                                                    type="골격근량"
-                                                                    value={`${item.prevInbody.muscle}kg`}
-                                                                />
-                                                                <InbodyInfo
-                                                                    type="체지방량"
-                                                                    value={`${item.prevInbody.fat}%`}
-                                                                />
-                                                                <InbodyInfo
-                                                                    type="BMI"
-                                                                    value={`${item.prevInbody.bmi}`}
-                                                                />
-                                                                <InbodyInfo
-                                                                    type="팔 근육 수준"
-                                                                    label={item.prevInbody.armGrade}
-                                                                />
-                                                                <InbodyInfo
-                                                                    type="몸통 근육 수준"
-                                                                    label={item.prevInbody.bodyGrade}
-                                                                />
-                                                                <InbodyInfo
-                                                                    type="다리 근육 수준"
-                                                                    label={item.prevInbody.legGrade}
-                                                                />
-                                                            </Box>
+                                                            <Badge
+                                                                type="primary"
+                                                                label={bodyTypes[item.prevInbody.userCase]}
+                                                            />
                                                         </div>
-                                                    )}
-                                                    <div>
-                                                        <span className="font-bold text-darkGray">
-                                                            현재 인바디 수치
-                                                        </span>
                                                         <Box className="flex-col">
                                                             <InbodyInfo
                                                                 type="키"
-                                                                value={`${item.curInbody.height}cm`}
+                                                                value={`${item.prevInbody.height}cm`}
                                                             />
                                                             <InbodyInfo
                                                                 type="체중"
-                                                                value={`${item.curInbody.weight}kg`}
+                                                                value={`${item.prevInbody.weight}kg`}
                                                             />
                                                             <InbodyInfo
                                                                 type="골격근량"
-                                                                value={`${item.curInbody.muscle}kg`}
+                                                                value={`${item.prevInbody.muscle}kg`}
                                                             />
                                                             <InbodyInfo
                                                                 type="체지방량"
-                                                                value={`${item.curInbody.fat}%`}
+                                                                value={`${item.prevInbody.fat}%`}
                                                             />
-                                                            <InbodyInfo type="BMI" value={`${item.curInbody.bmi}`} />
+                                                            <InbodyInfo type="BMI" value={`${item.prevInbody.bmi}`} />
                                                             <InbodyInfo
                                                                 type="팔 근육 수준"
-                                                                label={item.curInbody.armGrade}
+                                                                label={item.prevInbody.armGrade}
                                                             />
                                                             <InbodyInfo
                                                                 type="몸통 근육 수준"
-                                                                label={item.curInbody.bodyGrade}
+                                                                label={item.prevInbody.bodyGrade}
                                                             />
                                                             <InbodyInfo
                                                                 type="다리 근육 수준"
-                                                                label={item.curInbody.legGrade}
+                                                                label={item.prevInbody.legGrade}
                                                             />
                                                         </Box>
                                                     </div>
+                                                )}
+                                                <div>
+                                                    <div className="flex flex-row gap-2">
+                                                        <span className="font-bold text-darkGray">
+                                                            이후 인바디 수치
+                                                        </span>
+                                                        <Badge
+                                                            type="primary"
+                                                            label={bodyTypes[item.curInbody.userCase]}
+                                                        />
+                                                    </div>
+                                                    <Box className="flex-col">
+                                                        <InbodyInfo type="키" value={`${item.curInbody.height}cm`} />
+                                                        <InbodyInfo type="체중" value={`${item.curInbody.weight}kg`} />
+                                                        <InbodyInfo
+                                                            type="골격근량"
+                                                            value={`${item.curInbody.muscle}kg`}
+                                                        />
+                                                        <InbodyInfo type="체지방량" value={`${item.curInbody.fat}%`} />
+                                                        <InbodyInfo type="BMI" value={`${item.curInbody.bmi}`} />
+                                                        <InbodyInfo
+                                                            type="팔 근육 수준"
+                                                            label={item.curInbody.armGrade}
+                                                        />
+                                                        <InbodyInfo
+                                                            type="몸통 근육 수준"
+                                                            label={item.curInbody.bodyGrade}
+                                                        />
+                                                        <InbodyInfo
+                                                            type="다리 근육 수준"
+                                                            label={item.curInbody.legGrade}
+                                                        />
+                                                    </Box>
                                                 </div>
-                                                <Dialog.Close className="absolute top-2 right-2">✕</Dialog.Close>
-                                            </Dialog.Content>
-                                        </Dialog.Portal>
-                                    </Dialog.Root>
-                                );
-                            })
-                        )}
+                                            </div>
+                                            <Dialog.Close className="absolute top-2 right-2">✕</Dialog.Close>
+                                        </Dialog.Content>
+                                    </Dialog.Portal>
+                                </Dialog.Root>
+                            ))}
                     </div>
 
                     <div className="flex flex-col gap-2">
@@ -282,15 +279,6 @@ export const MyPage = () => {
                         <Box className="gap-1 flex-col">
                             <span className="text-darkGray font-bold">등록된 Private Key</span>
                             <span className="text-darkGray text-sm break-all">{privateKey}</span>
-                        </Box>
-                    )}
-
-                    {!data.telegram ? (
-                        <UnregisteredTelegram inputRef={telegramRef} onClick={handleRegisterTelegramClick} />
-                    ) : (
-                        <Box className="gap-1 flex-col">
-                            <span className="text-darkGray font-bold">등록된 Telegram ID</span>
-                            <span className="text-darkGray text-sm break-all">{data.telegram}</span>
                         </Box>
                     )}
 

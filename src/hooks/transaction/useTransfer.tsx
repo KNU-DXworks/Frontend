@@ -1,24 +1,37 @@
 import { fetchInstance } from "@/app/config/axios";
 import { queryClient } from "@/app/config/query";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback } from "react";
 
 interface TransferRequestBody {
-    walletAddress: string;
+    transactionId: number;
+    amount: number;
 }
 
-const transfer = async (data: TransferRequestBody) => {
-    const response = await fetchInstance.post("/api/transfer/", data);
+const transfer = async (data: TransferRequestBody, privateKey: string) => {
+    const response = await fetchInstance.post(
+        `/api/transaction/pay/${data.transactionId}?amount=${data.amount}`,
+        {}, 
+        {
+            headers: {
+                "X-PRIVATE-KEY": privateKey,
+            },
+        },
+    );
     return response.data;
 };
 
 export const useTransfer = () => {
+    const { privateKey } = useAuthStore();
+
     const { mutate } = useMutation({
         mutationFn: (payload: TransferRequestBody) => {
-            console.log(payload);
-            return transfer(payload);
-        },
+            console.log("useTransfer");
 
+            if (!privateKey) throw new Error("Private key가 등록되지 않았습니다.");
+            return transfer(payload, privateKey);
+        },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["transaction"] });
             queryClient.invalidateQueries({ queryKey: ["myProfile"] });

@@ -29,24 +29,24 @@ export const createInstance = (config: AxiosRequestConfig): AxiosInstance => {
         (error: unknown) => Promise.reject(error),
     );
 
-    instance.interceptors.response.use(
-        (response) => response,
-        (error) => {
-            if (error.response?.status === 403) {
-                const { logout } = useAuthStore.getState();
+    // instance.interceptors.response.use(
+    //     (response) => response,
+    //     (error) => {
+    //         if (error.response?.status === 403) {
+    //             const { logout } = useAuthStore.getState();
 
-                if (typeof window !== "undefined") {
-                    alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-                }
+    //             if (typeof window !== "undefined") {
+    //                 alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+    //             }
 
-                logout();
+    //             logout();
 
-                window.location.href = "/login";
-            }
+    //             window.location.href = "/start";
+    //         }
 
-            return Promise.reject(error);
-        },
-    );
+    //         return Promise.reject(error);
+    //     },
+    // );
 
     return instance;
 };

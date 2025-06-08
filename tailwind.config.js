@@ -67,6 +67,7 @@ export default {
                 skyBlue: "#e6f5ff",
                 blue: "#28AEFF",
                 darkBlue: "#0040FF",
+                telegram: "#0088cc",
             },
         },
         colors: {
@@ -86,6 +87,7 @@ export default {
             skyBlue: "#e6f5ff",
             blue: "#28AEFF",
             darkBlue: "#0040FF",
+            telegram: "#0088cc",
         },
     },
     plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar"), require("tailwind-scrollbar-hide")],
