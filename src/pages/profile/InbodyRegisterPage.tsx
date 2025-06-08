@@ -6,6 +6,7 @@ import { Title } from "@/components/common/Title";
 import { InbodyInfo } from "@/components/profile/InbodyInfo";
 import { useRegisterInbody } from "@/hooks/profile/useRegisterInbody";
 import { useNavigate } from "react-router-dom";
+import { FaInfoCircle } from "react-icons/fa";
 
 export const InbodyRegisterPage = () => {
     const bodyTypes: Record<string, string> = {
@@ -20,9 +21,9 @@ export const InbodyRegisterPage = () => {
         NONE: "미지정",
     };
 
-    const { handleFileChange, handleRegisterClick, latestInbody, isPending } = useRegisterInbody();
+    const { handleFileChange, handleRegisterClick, inbody, isPending, errorMessage } = useRegisterInbody();
     const navigate = useNavigate();
-    const data = latestInbody;
+    const data = inbody;
 
     return (
         <div className="flex flex-col gap-6">
@@ -31,7 +32,30 @@ export const InbodyRegisterPage = () => {
 
             <FileUploader onChange={handleFileChange} />
 
-            <Button label={isPending ? "분석 중..." : "정보 등록하기"} onClick={handleRegisterClick} />
+            {!data && <Button label={isPending ? "분석 중..." : "정보 등록하기"} onClick={handleRegisterClick} />}
+
+            {data && (
+                <>
+                    <div className="flex items-center">
+                        <FaInfoCircle className="mr-2 text-darkBlue" />
+                        <p className="text-darkBlue">인바디를 새롭게 등록하셨군요! 목표치도 등록하러 가볼까요?</p>
+                    </div>
+                    <Button label="목표치 등록하러가기" onClick={() => navigate("/goal/register")}></Button>
+                </>
+            )}
+
+            {errorMessage && (
+                <div className="flex items-center">
+                    <FaInfoCircle className="mr-2 text-red" />
+                    <p className="text-red">{errorMessage}</p>
+                </div>
+            )}
+
+            {isPending && (
+                <div className="flex justify-center items-center h-40">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid" />
+                </div>
+            )}
 
             {data && (
                 <>
