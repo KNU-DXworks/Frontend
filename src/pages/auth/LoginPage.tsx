@@ -12,11 +12,6 @@ export const LoginPage = () => {
     const handleKakaoLogin = () => {
         window.location.href = kakaoAuthUrl;
     };
-    
-    if (window.Telegram?.WebApp) {
-        window.Telegram.WebApp.ready();
-        console.log(window.Telegram.WebApp.initDataUnsafe?.user);
-    }
 
     return (
         <div className="flex flex-col items-center justify-center gap-10 h-screen">
