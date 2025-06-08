@@ -52,7 +52,7 @@ export const useRegisterPost = ({ community }: RegisterPostProps) => {
 
     const handleFileChange = useCallback((f: File | null) => setFile(f), []);
 
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             if (!file) throw new Error("파일이 선택되지 않았습니다.");
 
@@ -68,11 +68,11 @@ export const useRegisterPost = ({ community }: RegisterPostProps) => {
             return registerPost(payload);
         },
         onSuccess: () => {
-            alert("게시물을 성공적으로 등록하였습니다!");
             setIsAll(true);
             if (contentRef.current) contentRef.current.value = "";
             setFile(null);
             queryClient.invalidateQueries({ queryKey: ["posts", community] });
+            alert("게시물을 성공적으로 등록하였습니다!");
 
             navigate(-1);
         },
@@ -91,5 +91,6 @@ export const useRegisterPost = ({ community }: RegisterPostProps) => {
         contentRef,
         handleFileChange,
         handleRegisterClick,
+        isPending,
     };
 };
