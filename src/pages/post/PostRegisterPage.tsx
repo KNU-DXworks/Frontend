@@ -21,7 +21,7 @@ export const PostRegisterPage = () => {
     const [searchParams] = useSearchParams();
     const communityType = searchParams.get("communityType");
 
-    const { isAll, setIsAll, contentRef, handleFileChange, handleRegisterClick } = useRegisterPost({
+    const { isAll, setIsAll, contentRef, handleFileChange, handleRegisterClick, isPending } = useRegisterPost({
         community: communityType as Community,
     });
 
@@ -43,7 +43,13 @@ export const PostRegisterPage = () => {
 
             <TextArea ref={contentRef} placeholder="문구 추가..." className="border-chat" />
 
-            <Button label="공유하기" onClick={handleRegisterClick} />
+            <Button label={isPending ? "등록 중입니다..." : "공유하기"} onClick={handleRegisterClick} />
+            
+            {isPending && (
+                <div className="flex justify-center items-center h-40">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid" />
+                </div>
+            )}
         </div>
     );
 };
